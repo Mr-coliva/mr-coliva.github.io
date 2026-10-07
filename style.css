@@ -1,0 +1,407 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    background: #f5f7f8;
+    color: #17212b;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(245, 247, 248, 0.95);
+    border-bottom: 1px solid #d9e0e5;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-links a:hover {
+    opacity: 0.6;
+}
+
+.menu-toggle {
+    display: none;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 90vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 100px 30px;
+
+    background:
+        linear-gradient(
+            rgba(245, 247, 248, 0.92),
+            rgba(245, 247, 248, 0.92)
+        );
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    opacity: 0.65;
+}
+
+.hero h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+
+.hero-description {
+    max-width: 650px;
+    margin: 0 auto 35px;
+    font-size: 1.05rem;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.button {
+    display: inline-block;
+
+    padding: 13px 25px;
+
+    border: 1px solid #17212b;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    transition: 0.25s ease;
+}
+
+.button-primary {
+    background: #17212b;
+    color: white;
+}
+
+.button-primary:hover {
+    opacity: 0.8;
+}
+
+.button-secondary {
+    background: transparent;
+}
+
+.button-secondary:hover {
+    background: #17212b;
+    color: white;
+}
+
+
+/* =========================
+   GENERAL SECTIONS
+========================= */
+
+.section {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    padding: 120px 30px;
+}
+
+.section-alt {
+    max-width: none;
+    padding-left: max(30px, calc((100% - 1140px) / 2));
+    padding-right: max(30px, calc((100% - 1140px) / 2));
+
+    background: #e9eef1;
+}
+
+.section-heading {
+    max-width: 700px;
+    margin-bottom: 60px;
+}
+
+.section-heading h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.section-content {
+    max-width: 750px;
+}
+
+.section-content p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+
+/* =========================
+   EXPERIENCE
+========================= */
+
+.experience-list {
+    max-width: 900px;
+}
+
+.experience-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 40px;
+
+    padding: 35px 0;
+
+    border-top: 1px solid #b8c2c9;
+}
+
+.experience-date {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.experience-item h3 {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+
+/* =========================
+   QUALIFICATIONS
+========================= */
+
+.qualification-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.qualification-card {
+    padding: 35px;
+
+    border: 1px solid #d9e0e5;
+    background: #ffffff;
+}
+
+.qualification-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.qualification-card h3 {
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   COVER LETTER
+========================= */
+
+.cover-letter {
+    max-width: 750px;
+    font-size: 1.05rem;
+}
+
+.cover-letter p {
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   CV
+========================= */
+
+.cv-content {
+    max-width: 700px;
+}
+
+.cv-content p {
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-content {
+    max-width: 700px;
+}
+
+.contact-content p {
+    margin-bottom: 25px;
+}
+
+.contact-link {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+    padding: 40px 30px;
+
+    text-align: center;
+
+    background: #17212b;
+    color: white;
+}
+
+.site-footer p {
+    margin-bottom: 5px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .navbar {
+        padding: 18px 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+
+        position: absolute;
+
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        flex-direction: column;
+
+        padding: 25px 20px;
+
+        background: #f5f7f8;
+
+        border-bottom: 1px solid #d9e0e5;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hero {
+        min-height: 85vh;
+        padding: 80px 20px;
+    }
+
+    .section {
+        padding: 80px 20px;
+    }
+
+    .section-alt {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .qualification-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .experience-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+}
