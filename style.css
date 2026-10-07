@@ -13,10 +13,17 @@ html {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Inter", sans-serif;
     line-height: 1.6;
-    background: #f5f7f8;
-    color: #17212b;
+    background: #F4F6F7;
+    color: #17212B;
+}
+
+h1,
+h2,
+h3,
+.logo {
+    font-family: "Montserrat", sans-serif;
 }
 
 a {
@@ -37,8 +44,12 @@ ul {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(245, 247, 248, 0.95);
-    border-bottom: 1px solid #d9e0e5;
+
+    background: rgba(244, 246, 247, 0.94);
+
+    border-bottom: 1px solid #D5DEE3;
+
+    backdrop-filter: blur(10px);
 }
 
 .navbar {
@@ -52,9 +63,14 @@ ul {
 }
 
 .logo {
-    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 0.9rem;
     font-weight: 700;
-    letter-spacing: 2px;
+
+    letter-spacing: 3px;
+
+    color: #0B1F2A;
 }
 
 .nav-links {
@@ -63,13 +79,35 @@ ul {
 }
 
 .nav-links a {
-    font-size: 0.85rem;
+    position: relative;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+
+    color: #17212B;
 }
 
-.nav-links a:hover {
-    opacity: 0.6;
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -7px;
+
+    width: 0;
+    height: 1px;
+
+    background: #0B1F2A;
+
+    transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 .menu-toggle {
@@ -90,49 +128,73 @@ ul {
 
     display: flex;
     align-items: center;
-    justify-content: center;
 
-    text-align: center;
+    padding: 120px 30px;
 
-    padding: 100px 30px;
+    position: relative;
 
-    background:
-        linear-gradient(
-            rgba(245, 247, 248, 0.92),
-            rgba(245, 247, 248, 0.92)
-        );
+    background: #F4F6F7;
+
+    overflow: hidden;
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .eyebrow {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+
     font-weight: 700;
+
     letter-spacing: 3px;
+
     text-transform: uppercase;
-    margin-bottom: 15px;
-    opacity: 0.65;
+
+    margin-bottom: 18px;
+
+    color: #718792;
 }
 
 .hero h1 {
-    font-size: clamp(3rem, 8vw, 6rem);
-    line-height: 1;
-    letter-spacing: -2px;
-    margin-bottom: 20px;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+
+    line-height: 0.95;
+
+    font-weight: 700;
+
+    letter-spacing: -4px;
+
+    margin-bottom: 25px;
+
+    color: #0B1F2A;
 }
 
 .hero h2 {
-    font-size: clamp(1.3rem, 3vw, 2rem);
-    font-weight: 400;
-    margin-bottom: 25px;
+    font-family: "Inter", sans-serif;
+
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+
+    font-weight: 500;
+
+    letter-spacing: 1px;
+
+    color: #536773;
+
+    margin-bottom: 30px;
 }
 
 .hero-description {
     max-width: 650px;
-    margin: 0 auto 35px;
+
+    margin: 0 auto 40px;
+
     font-size: 1.05rem;
+
+    line-height: 1.8;
+
+    color: #53616A;
 }
 
 
@@ -150,26 +212,34 @@ ul {
 .button {
     display: inline-block;
 
-    padding: 13px 25px;
+    padding: 14px 28px;
 
-    border: 1px solid #17212b;
+    border: 1px solid #0B1F2A;
 
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+
     font-weight: 700;
 
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+
     text-transform: uppercase;
 
-    transition: 0.25s ease;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
 }
 
+.button:hover {
+    transform: translateY(-2px);
+}
 .button-primary {
-    background: #17212b;
-    color: white;
+    background: #0B1F2A;
+    color: #FFFFFF;
 }
 
 .button-primary:hover {
-    opacity: 0.8;
+    background: #172F3C;
 }
 
 .button-secondary {
@@ -181,6 +251,39 @@ ul {
     color: white;
 }
 
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    right: -120px;
+
+    width: 420px;
+    height: 420px;
+
+    border: 1px solid rgba(11, 31, 42, 0.08);
+
+    border-radius: 50%;
+
+    transform: translateY(-50%);
+}
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    right: 90px;
+
+    width: 1px;
+    height: 520px;
+
+    background: rgba(11, 31, 42, 0.08);
+
+    transform: translateY(-50%) rotate(45deg);
+}
 
 /* =========================
    GENERAL SECTIONS
@@ -203,12 +306,18 @@ ul {
 
 .section-heading {
     max-width: 700px;
-    margin-bottom: 60px;
+
+    margin-bottom: 70px;
 }
 
 .section-heading h2 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.1;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+
+    line-height: 1;
+
+    letter-spacing: -1.5px;
+
+    color: #0B1F2A;
 }
 
 
@@ -236,17 +345,26 @@ ul {
 
 .experience-item {
     display: grid;
+
     grid-template-columns: 120px 1fr;
+
     gap: 40px;
 
-    padding: 35px 0;
+    padding: 40px 0;
 
-    border-top: 1px solid #b8c2c9;
+    border-top: 1px solid #C8D2D8;
 }
 
 .experience-date {
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 0.8rem;
+
     font-weight: 700;
+
     letter-spacing: 1px;
+
+    color: #718792;
 }
 
 .experience-item h3 {
@@ -266,15 +384,32 @@ ul {
 }
 
 .qualification-card {
-    padding: 35px;
+    padding: 40px;
 
-    border: 1px solid #d9e0e5;
-    background: #ffffff;
+    border: 1px solid #D5DEE3;
+
+    background: #FFFFFF;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.qualification-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #AABAC3;
+
+    box-shadow: 0 15px 35px rgba(11, 31, 42, 0.08);
 }
 
 .qualification-icon {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 1.6rem;
+
+    margin-bottom: 25px;
+
+    opacity: 0.75;
 }
 
 .qualification-card h3 {
@@ -332,16 +467,23 @@ ul {
 ========================= */
 
 .site-footer {
-    padding: 40px 30px;
+    padding: 50px 30px;
 
     text-align: center;
 
-    background: #17212b;
-    color: white;
+    background: #0B1F2A;
+
+    color: #FFFFFF;
 }
 
 .site-footer p {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+
+    font-size: 0.8rem;
+
+    letter-spacing: 1px;
+
+    opacity: 0.75;
 }
 
 
@@ -350,6 +492,11 @@ ul {
 ========================= */
 
 @media (max-width: 800px) {
+
+         .hero::before,
+    .hero::after {
+        display: none;
+    }
 
     .navbar {
         padding: 18px 20px;
