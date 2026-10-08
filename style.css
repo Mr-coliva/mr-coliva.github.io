@@ -776,11 +776,57 @@ ul {
     color: #53616A;
 }
 
+/* =========================
+   STCW SUMMARY
+========================= */
+
+.stcw-summary {
+    display: grid;
+
+    grid-template-columns: 180px 1fr;
+
+    gap: 30px;
+
+    align-items: center;
+
+    margin-top: 30px;
+
+    padding: 25px 0;
+
+    border-top: 1px solid #C8D2D8;
+
+    border-bottom: 1px solid #C8D2D8;
+}
+
+.stcw-summary-label {
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 0.7rem;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #0B1F2A;
+}
+
+.stcw-summary p {
+    font-size: 0.9rem;
+
+    color: #53616A;
+}
+
 @media (max-width: 800px) {
 
          .hero::before,
          .hero::after {
          display: none;
+    }
+
+       .stcw-summary {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
     }
 
        .strength-grid {
