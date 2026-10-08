@@ -722,11 +722,77 @@ ul {
    MOBILE
 ========================= */
 
+/* =========================
+   WHY ME
+========================= */
+
+.strength-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 0 60px;
+
+    max-width: 1000px;
+}
+
+.strength-item {
+    display: grid;
+
+    grid-template-columns: 55px 1fr;
+
+    gap: 20px;
+
+    padding: 35px 0;
+
+    border-top: 1px solid #C8D2D8;
+}
+
+.strength-number {
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #718792;
+}
+
+.strength-item h3 {
+    margin-bottom: 10px;
+
+    font-size: 1.15rem;
+
+    color: #0B1F2A;
+}
+
+.strength-item p {
+    font-size: 0.95rem;
+
+    line-height: 1.7;
+
+    color: #53616A;
+}
+
 @media (max-width: 800px) {
 
          .hero::before,
          .hero::after {
          display: none;
+    }
+
+       .strength-grid {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+    .strength-item {
+        grid-template-columns: 45px 1fr;
+
+        gap: 15px;
     }
 
        .qualification-category {
