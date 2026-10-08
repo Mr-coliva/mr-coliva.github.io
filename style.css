@@ -75,13 +75,13 @@ ul {
 
 .nav-links {
     display: flex;
-    gap: 25px;
+    gap: 20px;
 }
 
 .nav-links a {
     position: relative;
 
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
 
     text-transform: uppercase;
@@ -814,6 +814,27 @@ ul {
     font-size: 0.9rem;
 
     color: #53616A;
+}
+
+
+/* =========================
+   QUALIFICATION NOTE
+========================= */
+
+.qualification-note {
+    margin-top: 20px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #D5DEE3;
+}
+
+.qualification-note p {
+    font-size: 0.8rem;
+
+    color: #718792;
+
+    font-style: italic;
 }
 
 @media (max-width: 800px) {
