@@ -545,7 +545,179 @@ ul {
     opacity: 0.75;
 }
 
+/* =========================
+   QUALIFICATION CATEGORIES
+========================= */
 
+.qualification-category {
+    margin-bottom: 90px;
+}
+
+.qualification-category:last-child {
+    margin-bottom: 0;
+}
+
+.qualification-category-heading {
+    margin-bottom: 35px;
+}
+
+.qualification-category-heading h3 {
+    font-size: 1.5rem;
+
+    color: #0B1F2A;
+}
+
+
+/* =========================
+   QUALIFICATION TOP
+========================= */
+
+.qualification-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   STCW BADGE
+========================= */
+
+.qualification-badge {
+    display: inline-block;
+
+    padding: 6px 9px;
+
+    background: #0B1F2A;
+
+    color: #FFFFFF;
+
+    font-size: 0.65rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================
+   STCW CODE
+========================= */
+
+.qualification-code {
+    font-size: 0.7rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #718792;
+}
+
+
+/* =========================
+   QUALIFICATION TYPE
+========================= */
+
+.qualification-type {
+    font-size: 0.65rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    color: #718792;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.qualification-status {
+    font-size: 0.65rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #718792;
+}
+
+
+/* =========================
+   QUALIFICATION TEXT
+========================= */
+
+.qualification-card h3 {
+    font-size: 1.15rem;
+
+    line-height: 1.3;
+
+    margin-bottom: 12px;
+
+    color: #0B1F2A;
+}
+
+.qualification-short {
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+    color: #718792;
+
+    margin-bottom: 15px;
+}
+
+.qualification-provider {
+    display: block;
+
+    margin-top: 25px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #E0E6EA;
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+
+    color: #536773;
+}
+
+
+/* =========================
+   STCW CARD
+========================= */
+
+.stcw-card {
+    border-top: 3px solid #0B1F2A;
+}
+
+
+/* =========================
+   IN PROGRESS
+========================= */
+
+.in-progress {
+    background: #F8FAFB;
+}
+
+.in-progress .qualification-status {
+    font-weight: 700;
+}
 /* =========================
    MOBILE
 ========================= */
@@ -555,6 +727,18 @@ ul {
          .hero::before,
          .hero::after {
          display: none;
+    }
+
+       .qualification-category {
+        margin-bottom: 65px;
+    }
+
+    .qualification-top {
+        align-items: flex-start;
+    }
+
+    .qualification-category-heading h3 {
+        font-size: 1.3rem;
     }
 
    .hero {
