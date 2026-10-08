@@ -1062,8 +1062,152 @@ ul {
 }
 
 /* =========================
+   CONTACT SECTION
+   ========================= */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+
+    max-width: 900px;
+    margin: 55px auto 0;
+}
+
+.contact-card {
+    display: block;
+
+    padding: 34px 32px;
+
+    background: #FFFFFF;
+    border: 1px solid #E1E7EA;
+    border-radius: 4px;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #8FA6B2;
+
+    box-shadow: 0 12px 28px rgba(11, 31, 42, 0.08);
+}
+
+.contact-label {
+    display: block;
+    margin-bottom: 12px;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+
+    color: #8FA6B2;
+}
+
+.contact-card h3 {
+    margin-bottom: 12px;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+
+    color: #0B1F2A;
+}
+
+.contact-card p {
+    margin-bottom: 22px;
+
+    font-size: 0.84rem;
+    line-height: 1.7;
+
+    color: #53616A;
+}
+
+.contact-action {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+
+    color: #0B1F2A;
+}
+
+.contact-note {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    max-width: 900px;
+    margin: 35px auto 0;
+    padding: 22px 26px;
+
+    border-top: 1px solid #D8E0E4;
+    border-bottom: 1px solid #D8E0E4;
+}
+
+.contact-note span {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+
+    color: #8FA6B2;
+}
+
+.contact-note strong {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+
+    color: #0B1F2A;
+}
+
+
+@media (max-width: 600px) {
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 40px;
+    }
+
+    .contact-card {
+        padding: 28px 22px;
+    }
+
+    .contact-card h3 {
+        font-size: 0.92rem;
+    }
+
+    .contact-card p {
+        font-size: 0.82rem;
+    }
+
+    .contact-note {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+
+        padding: 20px;
+    }
+
+    .contact-note strong {
+        line-height: 1.6;
+    }
+}
+/* =========================
    DESKTOP NAVIGATION ALIGNMENT
    ========================= */
+
 
 @media (min-width: 769px) {
 
