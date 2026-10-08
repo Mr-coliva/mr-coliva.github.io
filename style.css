@@ -1204,24 +1204,21 @@ ul {
         line-height: 1.6;
     }
 }
+
 /* =========================
    DESKTOP NAVIGATION ALIGNMENT
    ========================= */
 
-
 @media (min-width: 769px) {
 
-    header nav {
+    .nav-links {
         display: flex;
         align-items: center;
     }
 
-    header nav a {
-        display: inline-flex;
-        align-items: center;
-        height: 100%;
-        line-height: 1;
-        position: relative;
+    .nav-links a {
+        display: inline-block;
+        line-height: 1.6;
     }
 }
 
@@ -1265,73 +1262,41 @@ ul {
     }
 }
 
-@media (max-width: 800px) {
+/* =========================
+   RESPONSIVE
+========================= */
 
-         .hero::before,
-         .hero::after {
-         display: none;
-    }
+@media (max-width: 900px) {
 
-   @media (max-width: 768px) {
-
-    .timeline {
-        margin-top: 45px;
-        padding-left: 48px;
-    }
-
-    .timeline::before {
-        left: 17px;
-    }
-
-    .timeline-marker {
-        left: -48px;
-        width: 36px;
-        height: 36px;
-
-        font-size: 0.5rem;
-    }
-
-    .timeline-item {
-        margin-bottom: 35px;
-    }
-
-    .timeline-content {
-        padding: 22px 20px;
-    }
-
-    .timeline-content h3 {
-        font-size: 0.95rem;
-    }
-
-    .timeline-content p {
-        font-size: 0.84rem;
-        line-height: 1.7;
-    }
-
-    .timeline-tags span {
-        font-size: 0.58rem;
+    .capabilities-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-       .stcw-summary {
-        grid-template-columns: 1fr;
 
+@media (max-width: 800px) {
+
+    .hero::before,
+    .hero::after {
+        display: none;
+    }
+
+    .stcw-summary {
+        grid-template-columns: 1fr;
         gap: 10px;
     }
 
-       .strength-grid {
+    .strength-grid {
         grid-template-columns: 1fr;
-
         gap: 0;
     }
 
     .strength-item {
         grid-template-columns: 45px 1fr;
-
         gap: 15px;
     }
 
-       .qualification-category {
+    .qualification-category {
         margin-bottom: 65px;
     }
 
@@ -1343,21 +1308,18 @@ ul {
         font-size: 1.3rem;
     }
 
-   .hero {
-    min-height: auto;
+    .hero {
+        min-height: auto;
+        padding: 90px 20px 100px;
+    }
 
-    padding: 90px 20px 100px;
-}
-
-       .hero-layout {
+    .hero-layout {
         grid-template-columns: 1fr;
-
         gap: 50px;
     }
 
     .hero-image {
         max-width: 340px;
-
         justify-self: center;
     }
 
@@ -1414,4 +1376,98 @@ ul {
         gap: 10px;
     }
 
+    .timeline {
+        margin-top: 45px;
+        padding-left: 48px;
+    }
+
+    .timeline::before {
+        left: 17px;
+    }
+
+    .timeline-marker {
+        left: -48px;
+        width: 36px;
+        height: 36px;
+        font-size: 0.5rem;
+    }
+
+    .timeline-item {
+        margin-bottom: 35px;
+    }
+
+    .timeline-content {
+        padding: 22px 20px;
+    }
+
+    .timeline-content h3 {
+        font-size: 0.95rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.84rem;
+        line-height: 1.7;
+    }
+
+    .timeline-tags span {
+        font-size: 0.58rem;
+    }
+
+    .capabilities-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 40px;
+    }
+
+    .capability-card {
+        padding: 25px 22px;
+    }
+
+    .capability-card h3 {
+        font-size: 0.95rem;
+    }
+
+    .capability-card p {
+        font-size: 0.82rem;
+    }
+
+    .capability-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .capability-footer strong {
+        line-height: 1.6;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 40px;
+    }
+
+    .contact-card {
+        padding: 28px 22px;
+    }
+
+    .contact-card h3 {
+        font-size: 0.92rem;
+    }
+
+    .contact-card p {
+        font-size: 0.82rem;
+    }
+
+    .contact-note {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .contact-note strong {
+        line-height: 1.6;
+    }
 }
