@@ -1061,6 +1061,26 @@ ul {
     color: #0B1F2A;
 }
 
+/* =========================
+   DESKTOP NAVIGATION ALIGNMENT
+   ========================= */
+
+@media (min-width: 769px) {
+
+    header nav {
+        display: flex;
+        align-items: center;
+    }
+
+    header nav a {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        line-height: 1;
+        position: relative;
+    }
+}
+
 @media (max-width: 900px) {
 
     .capabilities-grid {
