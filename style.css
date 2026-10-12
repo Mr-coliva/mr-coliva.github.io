@@ -1580,3 +1580,187 @@ ul {
     }
 }
 
+
+/* ========================================
+   DARK THEME
+======================================== */
+
+body.dark-theme {
+    background: #0B1F2A;
+    color: #E5EDF1;
+}
+
+/* Header and navigation */
+body.dark-theme .site-header {
+    background: rgba(11, 31, 42, 0.96);
+    border-bottom-color: #29414D;
+}
+
+body.dark-theme .logo,
+body.dark-theme .nav-links a,
+body.dark-theme .language-toggle,
+body.dark-theme .theme-toggle {
+    color: #E5EDF1;
+}
+
+body.dark-theme .nav-links a::after {
+    background: #E5EDF1;
+}
+
+body.dark-theme .menu-toggle {
+    color: #E5EDF1;
+}
+
+body.dark-theme .language-options {
+    background: #102B38;
+    border-color: #29414D;
+}
+
+body.dark-theme .language-options button {
+    color: #E5EDF1;
+}
+
+body.dark-theme .language-options button:hover {
+    background: #1A3947;
+}
+
+/* Main backgrounds */
+body.dark-theme .hero,
+body.dark-theme .section {
+    background-color: #0B1F2A;
+}
+
+body.dark-theme .section-alt {
+    background: #102B38;
+}
+
+/* Headings and main text */
+body.dark-theme .hero h1,
+body.dark-theme .section-heading h2,
+body.dark-theme .qualification-category-heading h3,
+body.dark-theme .qualification-card h3,
+body.dark-theme .strength-item h3,
+body.dark-theme .timeline-content h3,
+body.dark-theme .capability-card h3,
+body.dark-theme .capability-footer strong,
+body.dark-theme .contact-card h3,
+body.dark-theme .contact-action,
+body.dark-theme .stcw-summary-label {
+    color: #E5EDF1;
+}
+
+body.dark-theme .hero h2,
+body.dark-theme .hero-description,
+body.dark-theme .section-content p,
+body.dark-theme .cover-letter,
+body.dark-theme .cv-content p,
+body.dark-theme .contact-content p,
+body.dark-theme .strength-item p,
+body.dark-theme .stcw-summary p,
+body.dark-theme .timeline-content p,
+body.dark-theme .capability-card p,
+body.dark-theme .contact-card p {
+    color: #C0CFD6;
+}
+
+/* Cards */
+body.dark-theme .qualification-card,
+body.dark-theme .timeline-content,
+body.dark-theme .capability-card,
+body.dark-theme .contact-card {
+    background: #102B38;
+    border-color: #294653;
+}
+
+body.dark-theme .qualification-card:hover,
+body.dark-theme .capability-card:hover,
+body.dark-theme .contact-card:hover {
+    border-color: #8FA6B2;
+}
+
+body.dark-theme .in-progress,
+body.dark-theme .timeline-future .timeline-content {
+    background: #153541;
+}
+
+body.dark-theme .qualification-provider {
+    border-top-color: #294653;
+    color: #C0CFD6;
+}
+
+/* Timeline and tags */
+body.dark-theme .timeline-tags span {
+    background: #153541;
+    border-color: #36515E;
+    color: #C0CFD6;
+}
+
+body.dark-theme .timeline-future .timeline-marker {
+    color: #E5EDF1;
+    border-color: #8FA6B2;
+}
+
+/* Dividers and borders */
+body.dark-theme .experience-item,
+body.dark-theme .strength-item,
+body.dark-theme .stcw-summary,
+body.dark-theme .capability-footer,
+body.dark-theme .contact-note {
+    border-color: #294653;
+}
+
+body.dark-theme .qualification-note {
+    border-top-color: #294653;
+}
+
+body.dark-theme .hero::before,
+body.dark-theme .hero::after {
+    border-color: rgba(229, 237, 241, 0.10);
+    background-color: rgba(229, 237, 241, 0.10);
+}
+
+body.dark-theme .hero-image::before {
+    border-color: rgba(229, 237, 241, 0.18);
+}
+
+/* Buttons */
+body.dark-theme .button {
+    border-color: #8FA6B2;
+}
+
+body.dark-theme .button-primary {
+    background: #E5EDF1;
+    color: #0B1F2A;
+}
+
+body.dark-theme .button-primary:hover {
+    background: #C0CFD6;
+}
+
+body.dark-theme .button-secondary {
+    color: #E5EDF1;
+    background: transparent;
+}
+
+body.dark-theme .button-secondary:hover {
+    background: #E5EDF1;
+    color: #0B1F2A;
+}
+
+/* Footer */
+body.dark-theme .site-footer {
+    background: #071720;
+    border-top: 1px solid #29414D;
+}
+
+/* Mobile navigation */
+@media (max-width: 800px) {
+    body.dark-theme .nav-links {
+        background: #102B38;
+        border-bottom-color: #29414D;
+    }
+
+    body.dark-theme .language-options {
+        background: transparent;
+    }
+}
