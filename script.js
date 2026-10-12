@@ -415,6 +415,8 @@ function applyLanguage(language) {
     } catch (error) {
         // Language switching remains available without browser storage.
     }
+
+    updateDocumentLinks(language);
 }
 
 // MOBILE NAVIGATION
@@ -527,4 +529,35 @@ try {
 } catch (error) {
     setTheme(false);
     applyLanguage("en");
+}
+
+
+/* ========================================
+   LANGUAGE-SPECIFIC DOCUMENT DOWNLOADS
+======================================== */
+
+function updateDocumentLinks(language) {
+    const documents = {
+        en: {
+            cv: "documents/CV.pdf",
+            "cover-letter": "documents/Cover-Letter.pdf"
+        },
+        es: {
+            cv: "documents/CV-ES.pdf",
+            "cover-letter": "documents/Cover-Letter-ES.pdf"
+        },
+        ca: {
+            cv: "documents/CV-CA.pdf",
+            "cover-letter": "documents/Cover-Letter-CA.pdf"
+        }
+    };
+
+    document.querySelectorAll("[data-document]").forEach(link => {
+        const documentType = link.dataset.document;
+        const file = documents[language]?.[documentType];
+
+        if (file) {
+            link.href = file;
+        }
+    });
 }
