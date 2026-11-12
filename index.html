@@ -184,21 +184,47 @@
 
 
         <!-- =========================
+             REEL (video band after the hero)
+             Two silent vertical clips side by side; script.js plays both
+             while the band is on screen.
+        ========================== -->
+
+        <section id="reel" class="reel" aria-label="Video: life at sea" data-i18n-attr="aria-label">
+
+            <div class="container">
+
+                <div class="reel__pair">
+
+                    <video class="reel__video" muted loop playsinline preload="none" width="1080" height="1920" poster="media/video/posters/sailing.jpg" aria-label="Video: sailing, view from the bow" data-i18n-attr="aria-label">
+                        <source src="media/video/sailing.mp4" type="video/mp4">
+                    </video>
+
+                    <video class="reel__video" muted loop playsinline preload="none" width="1080" height="1920" poster="media/video/posters/jet-ski.jpg" aria-label="Video: riding a jet ski along the coast" data-i18n-attr="aria-label">
+                        <source src="media/video/jet-ski.mp4" type="video/mp4">
+                    </video>
+
+                </div>
+
+                <!-- One control for both clips. Shown by script.js; label and icon follow the playback state. -->
+                <button type="button" class="media-toggle reel__toggle" data-state="paused" aria-label="Play video" hidden>
+                    <svg class="media-toggle__pause" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+                        <path d="M9 6v12M15 6v12"/>
+                    </svg>
+                    <svg class="media-toggle__play" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                        <path d="M8.5 6v12l9.5-6z"/>
+                    </svg>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
              DECKHAND PROFILE
         ========================== -->
 
         <section id="deckhand-profile" class="section profile" aria-labelledby="profile-title">
-
-            <div class="moment">
-                <div class="container">
-                    <p class="moment__statement">
-                        <span class="moment__line">Safety first.</span>
-                        <span class="moment__line">Learn fast.</span>
-                        <span class="moment__line">Work hard.</span>
-                        <span class="moment__line">Support the crew.</span>
-                    </p>
-                </div>
-            </div>
 
             <div class="profile__body container">
 
@@ -440,6 +466,78 @@
 
 
         <!-- =========================
+             ON DUTY (photo - video - photo)
+             From 40rem: static centred triptych. Below 40rem: scroll-snap
+             carousel that script.js opens on the middle slide, adding the
+             Previous / Next controls and the counter. The track's tabindex is
+             removed by script.js when it is not a scroll container.
+        ========================== -->
+
+        <section id="on-duty" class="section showcase" role="region" aria-roledescription="carousel" aria-label="At work on the water" data-i18n-attr="aria-label">
+
+            <div class="showcase__track" tabindex="0">
+
+                <div class="showcase__slide showcase__slide--photo">
+                    <img
+                        src="media/photos/rescue-boat-helm.jpg"
+                        alt="Carles Oliva at the helm of a Red Cross rescue boat"
+                        data-i18n-attr="alt"
+                        width="1500"
+                        height="2000"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                </div>
+
+                <div class="showcase__slide showcase__slide--video">
+                    <video class="showcase__video" muted loop playsinline preload="none" width="1080" height="1920" poster="media/video/posters/rescue-boat.jpg" aria-label="Video: on board a Red Cross rescue boat off the coast" data-i18n-attr="aria-label">
+                        <source src="media/video/rescue-boat.mp4" type="video/mp4">
+                    </video>
+
+                    <!-- Shown by script.js; label and icon follow the playback state. -->
+                    <button type="button" class="media-toggle showcase__toggle" data-state="paused" aria-label="Play video" hidden>
+                        <svg class="media-toggle__pause" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+                            <path d="M9 6v12M15 6v12"/>
+                        </svg>
+                        <svg class="media-toggle__play" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <path d="M8.5 6v12l9.5-6z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="showcase__slide showcase__slide--photo">
+                    <img
+                        src="media/photos/lifeguard-quad.jpg"
+                        alt="Carles Oliva on lifeguard duty, sitting on a beach patrol quad"
+                        data-i18n-attr="alt"
+                        width="1500"
+                        height="2000"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                </div>
+
+            </div>
+
+            <!-- Mobile only (hidden by CSS from 40rem). Shown by script.js -->
+            <div class="showcase__controls container" hidden>
+                <button type="button" class="showcase__button showcase__button--prev" aria-label="Previous" data-i18n-attr="aria-label">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                        <path d="M15 6l-6 6 6 6"/>
+                    </svg>
+                </button>
+                <p class="showcase__counter" aria-live="polite">2 / 3</p>
+                <button type="button" class="showcase__button showcase__button--next" aria-label="Next" data-i18n-attr="aria-label">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                        <path d="M9 6l6 6-6 6"/>
+                    </svg>
+                </button>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
              EXPERIENCE
         ========================== -->
 
@@ -620,6 +718,12 @@
 
         <section id="contact" class="section contact" aria-labelledby="contact-title">
 
+            <!-- Decorative background video + scrim; script.js plays it while in view. -->
+            <video class="contact__bg" muted loop playsinline preload="none" poster="media/video/posters/freediving.jpg" aria-hidden="true" tabindex="-1">
+                <source src="media/video/freediving.mp4" type="video/mp4">
+            </video>
+            <div class="contact__scrim" aria-hidden="true"></div>
+
             <div class="container contact__inner">
 
                 <div class="contact__head">
@@ -686,6 +790,16 @@
                 </ul>
 
             </div>
+
+            <!-- Shown by script.js; label and icon follow the playback state. -->
+            <button type="button" class="media-toggle contact__toggle" data-state="paused" aria-label="Play video" hidden>
+                <svg class="media-toggle__pause" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+                    <path d="M9 6v12M15 6v12"/>
+                </svg>
+                <svg class="media-toggle__play" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M8.5 6v12l9.5-6z"/>
+                </svg>
+            </button>
 
         </section>
 
