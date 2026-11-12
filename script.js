@@ -8,6 +8,8 @@ const themeToggle = document.querySelector(".theme-toggle");
 
 let currentLanguage = "en";
 const originalTexts = new WeakMap();
+// English originals of attributes listed in data-i18n-attr, per element.
+const originalAttributes = new WeakMap();
 
 const translations = {
     es: {
@@ -43,10 +45,6 @@ const translations = {
         "Contact Me": "Contactar conmigo",
 
         // Profile
-        "Safety first.": "Seguridad primero.",
-        "Learn fast.": "Aprender rápido.",
-        "Work hard.": "Trabajar duro.",
-        "Support the crew.": "Apoyar a la tripulación.",
         "What I bring on board": "Lo que aporto a bordo",
         "Based in Barcelona, I combine maritime training with lifesaving and customer-facing experience. Lifeguard work has taught me to stay calm under pressure, act quickly and work as part of a team. I am looking for a junior deckhand position where I can keep developing practical seamanship.": "Afincado en Barcelona, combino formación marítima con experiencia en salvamento y atención al público. El trabajo de socorrista me ha enseñado a mantener la calma bajo presión, actuar con rapidez y trabajar en equipo. Busco un puesto de marinero de cubierta júnior donde seguir desarrollando mis habilidades marineras prácticas.",
         "Safety and emergency response": "Seguridad y respuesta ante emergencias",
@@ -128,7 +126,20 @@ const translations = {
         "Send an email": "Enviar un correo",
         "Message on Telegram": "Escribir por Telegram",
         "View Instagram profile": "Ver perfil de Instagram",
-        "Maritime Professional": "Profesional marítimo"
+        "Maritime Professional": "Profesional marítimo",
+
+        // Media: reel, carousel and contact background (attributes and controls)
+        "Video: life at sea": "Vídeo: vida en el mar",
+        "Video: sailing, view from the bow": "Vídeo: navegando a vela, vista desde la proa",
+        "Video: riding a jet ski along the coast": "Vídeo: navegando en moto de agua junto a la costa",
+        "At work on the water": "Trabajando en el mar",
+        "Carles Oliva at the helm of a Red Cross rescue boat": "Carles Oliva al timón de una embarcación de salvamento de Cruz Roja",
+        "Carles Oliva on lifeguard duty, sitting on a beach patrol quad": "Carles Oliva de servicio como socorrista, sentado en un quad de vigilancia de playa",
+        "Video: on board a Red Cross rescue boat off the coast": "Vídeo: a bordo de una embarcación de salvamento de Cruz Roja frente a la costa",
+        "Pause video": "Pausar vídeo",
+        "Play video": "Reproducir vídeo",
+        "Previous": "Anterior",
+        "Next": "Siguiente"
     },
 
     ca: {
@@ -164,10 +175,6 @@ const translations = {
         "Contact Me": "Contacta amb mi",
 
         // Profile
-        "Safety first.": "Seguretat primer.",
-        "Learn fast.": "Aprendre ràpid.",
-        "Work hard.": "Treballar de valent.",
-        "Support the crew.": "Donar suport a la tripulació.",
         "What I bring on board": "El que aporto a bord",
         "Based in Barcelona, I combine maritime training with lifesaving and customer-facing experience. Lifeguard work has taught me to stay calm under pressure, act quickly and work as part of a team. I am looking for a junior deckhand position where I can keep developing practical seamanship.": "Establert a Barcelona, combino formació marítima amb experiència en salvament i atenció al públic. La feina de socorrista m'ha ensenyat a mantenir la calma sota pressió, actuar amb rapidesa i treballar en equip. Busco un lloc de mariner de coberta júnior on continuar desenvolupant les meves habilitats pràctiques de marineria.",
         "Safety and emergency response": "Seguretat i resposta davant d'emergències",
@@ -249,7 +256,20 @@ const translations = {
         "Send an email": "Enviar un correu",
         "Message on Telegram": "Escriure per Telegram",
         "View Instagram profile": "Veure el perfil d'Instagram",
-        "Maritime Professional": "Professional marítim"
+        "Maritime Professional": "Professional marítim",
+
+        // Media: reel, carousel and contact background (attributes and controls)
+        "Video: life at sea": "Vídeo: vida al mar",
+        "Video: sailing, view from the bow": "Vídeo: navegant a vela, vista des de la proa",
+        "Video: riding a jet ski along the coast": "Vídeo: navegant amb moto d'aigua vora la costa",
+        "At work on the water": "Treballant al mar",
+        "Carles Oliva at the helm of a Red Cross rescue boat": "Carles Oliva al timó d'una embarcació de salvament de Creu Roja",
+        "Carles Oliva on lifeguard duty, sitting on a beach patrol quad": "Carles Oliva de servei com a socorrista, assegut en un quad de vigilància de platja",
+        "Video: on board a Red Cross rescue boat off the coast": "Vídeo: a bord d'una embarcació de salvament de Creu Roja davant la costa",
+        "Pause video": "Pausa el vídeo",
+        "Play video": "Reprodueix el vídeo",
+        "Previous": "Anterior",
+        "Next": "Següent"
     }
 };
 
@@ -284,7 +304,8 @@ function applyLanguage(language) {
         const parent = node.parentElement;
 
         // Language names stay in their own language; icons have no text to translate.
-        if (!parent || parent.closest(".language-switch, .theme-toggle-icon, svg, script, style")) {
+        // The carousel counter ("1 / 3") is language-neutral and rewritten by script.
+        if (!parent || parent.closest(".language-switch, .theme-toggle-icon, .showcase__counter, svg, script, style")) {
             continue;
         }
 
@@ -333,8 +354,30 @@ function applyLanguage(language) {
         button.setAttribute("aria-pressed", String(button.dataset.lang === language));
     });
 
+    // Generic attribute translation: data-i18n-attr="aria-label" (or "alt", or a
+    // space-separated list). The English value in the markup is kept as the key.
+    document.querySelectorAll("[data-i18n-attr]").forEach((element) => {
+        let originals = originalAttributes.get(element);
+
+        if (!originals) {
+            originals = {};
+            originalAttributes.set(element, originals);
+        }
+
+        element.dataset.i18nAttr.split(/\s+/).filter(Boolean).forEach((name) => {
+            if (!(name in originals)) {
+                originals[name] = element.getAttribute(name);
+            }
+
+            if (originals[name] !== null) {
+                element.setAttribute(name, translate(normalizeText(originals[name])));
+            }
+        });
+    });
+
     updateMenuLabel();
     updateThemeLabel();
+    updateMediaToggleLabels();
 
     try {
         localStorage.setItem("preferred-language", language);
@@ -656,6 +699,418 @@ if (capabilityList) {
         capabilityDesktopHoverQuery.addEventListener("change", syncCapabilityDesktopHover);
     } else if (typeof capabilityDesktopHoverQuery.addListener === "function") {
         capabilityDesktopHoverQuery.addListener(syncCapabilityDesktopHover);
+    }
+}
+
+/* ========================================
+   MEDIA: REEL, CAROUSEL, CONTACT BACKGROUND
+   All clips are silent. They only play while their section is on screen,
+   never autoplay under prefers-reduced-motion, and can always be paused.
+======================================== */
+
+const mediaReducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+// Pause / play buttons: data-state drives the icon (CSS) and the translated label.
+function setMediaToggleState(button, playing) {
+    if (!button) return;
+
+    button.dataset.state = playing ? "playing" : "paused";
+    button.setAttribute("aria-label", translate(playing ? "Pause video" : "Play video"));
+}
+
+// Called by applyLanguage() so the dynamic labels follow the language.
+function updateMediaToggleLabels() {
+    document.querySelectorAll(".media-toggle").forEach((button) => {
+        setMediaToggleState(button, button.dataset.state === "playing");
+    });
+}
+
+// play() returns a promise that rejects when autoplay is blocked.
+function playVideo(video, onRejected) {
+    const rejected = () => {
+        if (typeof onRejected === "function") onRejected();
+    };
+
+    try {
+        const result = video.play();
+
+        if (result && typeof result.catch === "function") {
+            result.catch(rejected);
+        }
+    } catch (error) {
+        rejected();
+    }
+}
+
+// Reports whether `element` is on screen: at least `ratio` of it is visible, or
+// it fills half the viewport (for sections taller than the screen).
+function observeVisibility(element, ratio, callback) {
+    if (!("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            const visible = entry.isIntersecting && (
+                entry.intersectionRatio >= ratio ||
+                entry.intersectionRect.height >= window.innerHeight * 0.5
+            );
+
+            callback(visible);
+        });
+    }, { threshold: [0, ratio / 2, ratio, 0.6, 0.9] });
+
+    observer.observe(element);
+}
+
+// REEL: two looping clips side by side, played and paused together by one button.
+const reel = document.querySelector(".reel");
+
+if (reel) {
+    const reelVideos = Array.from(reel.querySelectorAll(".reel__video"));
+    const reelToggle = reel.querySelector(".reel__toggle");
+
+    if (reelVideos.length > 0) {
+        let reelInView = false;
+        // A user pause persists; reduced motion starts in the paused state.
+        let reelUserPaused = mediaReducedMotionQuery.matches;
+
+        const isReelPlaying = () => reelVideos.some((video) => !video.paused);
+
+        const refreshReelToggle = () => {
+            setMediaToggleState(reelToggle, isReelPlaying());
+        };
+
+        const playReel = () => {
+            reelVideos.forEach((video) => {
+                if (video.paused) playVideo(video, refreshReelToggle);
+            });
+        };
+
+        const pauseReel = () => {
+            reelVideos.forEach((video) => {
+                if (!video.paused) video.pause();
+            });
+        };
+
+        const syncReel = () => {
+            if (reelInView && !reelUserPaused) {
+                playReel();
+            } else {
+                pauseReel();
+            }
+        };
+
+        reelVideos.forEach((video) => {
+            video.addEventListener("play", refreshReelToggle);
+            video.addEventListener("pause", refreshReelToggle);
+        });
+
+        if (reelToggle) {
+            reelToggle.hidden = false;
+
+            reelToggle.addEventListener("click", () => {
+                if (isReelPlaying()) {
+                    reelUserPaused = true;
+                    pauseReel();
+                } else {
+                    reelUserPaused = false;
+                    playReel();
+                }
+            });
+        }
+
+        observeVisibility(reel, 0.4, (visible) => {
+            reelInView = visible;
+            syncReel();
+        });
+    }
+}
+
+// SHOWCASE: photo - video - photo. From 40rem it is a static triptych; below
+// 40rem a scroll-snap carousel with Previous / Next and a counter.
+const showcase = document.querySelector(".showcase");
+
+if (showcase) {
+    const showcaseTrack = showcase.querySelector(".showcase__track");
+    const showcaseSlides = Array.from(showcase.querySelectorAll(".showcase__slide"));
+    const showcaseControls = showcase.querySelector(".showcase__controls");
+    const showcasePrev = showcase.querySelector(".showcase__button--prev");
+    const showcaseNext = showcase.querySelector(".showcase__button--next");
+    const showcaseCounter = showcase.querySelector(".showcase__counter");
+    const showcaseVideo = showcase.querySelector(".showcase__video");
+    const showcaseToggle = showcase.querySelector(".showcase__toggle");
+
+    if (showcaseTrack && showcaseSlides.length > 0) {
+        const lastIndex = showcaseSlides.length - 1;
+        const middleIndex = Math.floor(lastIndex / 2);
+        const videoIndex = showcaseSlides.findIndex(
+            (slide) => showcaseVideo && slide.contains(showcaseVideo)
+        );
+        const showcaseCarouselQuery = window.matchMedia("(max-width: 39.99rem)");
+
+        let showcaseIndex = middleIndex;
+        let showcaseTarget = null;      // slide a Previous / Next scroll is heading to
+        let showcaseInView = false;
+        // A user pause persists; reduced motion starts in the paused state.
+        let showcaseUserPaused = mediaReducedMotionQuery.matches;
+        let showcaseFrame = 0;
+
+        const isCarousel = () => showcaseCarouselQuery.matches;
+
+        const refreshShowcaseToggle = () => {
+            if (showcaseVideo) setMediaToggleState(showcaseToggle, !showcaseVideo.paused);
+        };
+
+        // Triptych: plays while the section is on screen. Carousel: also needs the
+        // video slide to be the centred one. Otherwise it is paused.
+        const syncShowcaseVideo = () => {
+            if (!showcaseVideo) return;
+
+            const onStage = showcaseInView && (!isCarousel() || showcaseIndex === videoIndex);
+
+            if (onStage && !showcaseUserPaused) {
+                if (showcaseVideo.paused) playVideo(showcaseVideo, refreshShowcaseToggle);
+            } else if (!showcaseVideo.paused) {
+                showcaseVideo.pause();
+            }
+        };
+
+        const slideScrollLeft = (index) => {
+            const slide = showcaseSlides[index];
+
+            return slide.offsetLeft - (showcaseTrack.clientWidth - slide.offsetWidth) / 2;
+        };
+
+        const setShowcaseCounter = () => {
+            if (!showcaseCounter) return;
+
+            const text = (showcaseIndex + 1) + " / " + showcaseSlides.length;
+
+            // Only touch the live region when the text really changes.
+            if (showcaseCounter.textContent.trim() !== text) {
+                showcaseCounter.textContent = text;
+            }
+        };
+
+        const setShowcaseButtons = () => {
+            const settings = [
+                [showcasePrev, showcaseIndex === 0, showcaseNext],
+                [showcaseNext, showcaseIndex === lastIndex, showcasePrev]
+            ];
+
+            settings.forEach(([button, disable, other]) => {
+                if (!button) return;
+
+                // A button that is about to be disabled hands its focus to the other one.
+                if (disable && document.activeElement === button && other) {
+                    other.disabled = false;
+                    other.focus();
+                }
+
+                button.disabled = disable;
+            });
+        };
+
+        const updateShowcase = () => {
+            showcaseFrame = 0;
+
+            // Static triptych: nothing scrolls, there is no active slide to track.
+            if (!isCarousel()) {
+                syncShowcaseVideo();
+                return;
+            }
+
+            const center = showcaseTrack.scrollLeft + showcaseTrack.clientWidth / 2;
+            let closest = 0;
+            let smallest = Infinity;
+
+            showcaseSlides.forEach((slide, index) => {
+                const distance = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - center);
+
+                if (distance < smallest) {
+                    smallest = distance;
+                    closest = index;
+                }
+            });
+
+            if (closest === showcaseTarget) {
+                showcaseTarget = null;
+            }
+
+            showcaseIndex = closest;
+
+            setShowcaseCounter();
+            setShowcaseButtons();
+            syncShowcaseVideo();
+        };
+
+        // Applies the layout mode on load and whenever the 40rem breakpoint is crossed.
+        const applyShowcaseMode = () => {
+            showcaseTarget = null;
+            showcaseIndex = middleIndex;
+
+            if (isCarousel()) {
+                showcase.setAttribute("aria-roledescription", "carousel");
+                showcaseTrack.setAttribute("tabindex", "0");
+
+                // Open on the middle slide: set the offset directly and instantly
+                // (no smooth scroll, no scrollIntoView, so the page never moves).
+                showcaseTrack.style.scrollBehavior = "auto";
+                showcaseTrack.scrollLeft = slideScrollLeft(middleIndex);
+                showcaseTrack.style.scrollBehavior = "";
+            } else {
+                // Triptych: not a scroll container, so no tab stop and no offset.
+                showcase.removeAttribute("aria-roledescription");
+                showcaseTrack.removeAttribute("tabindex");
+                showcaseTrack.scrollLeft = 0;
+            }
+
+            updateShowcase();
+        };
+
+        const requestShowcaseUpdate = () => {
+            if (showcaseFrame) return;
+
+            showcaseFrame = window.requestAnimationFrame(updateShowcase);
+        };
+
+        const goToSlide = (index) => {
+            if (!isCarousel()) return;
+
+            const target = Math.max(0, Math.min(lastIndex, index));
+            const left = slideScrollLeft(target);
+
+            showcaseTarget = target;
+
+            try {
+                showcaseTrack.scrollTo({
+                    left,
+                    behavior: mediaReducedMotionQuery.matches ? "auto" : "smooth"
+                });
+            } catch (error) {
+                showcaseTrack.scrollLeft = left;
+            }
+        };
+
+        // Repeated presses during a smooth scroll continue from the slide being scrolled to.
+        const stepShowcase = (direction) => {
+            const from = showcaseTarget === null ? showcaseIndex : showcaseTarget;
+
+            goToSlide(from + direction);
+        };
+
+        if (showcasePrev) {
+            showcasePrev.addEventListener("click", () => stepShowcase(-1));
+        }
+
+        if (showcaseNext) {
+            showcaseNext.addEventListener("click", () => stepShowcase(1));
+        }
+
+        if (showcaseControls && showcasePrev && showcaseNext) {
+            showcaseControls.hidden = false;
+        }
+
+        showcaseTrack.addEventListener("scroll", requestShowcaseUpdate, { passive: true });
+        window.addEventListener("resize", requestShowcaseUpdate);
+
+        // A direct gesture on the track cancels any pending Previous / Next target.
+        ["pointerdown", "touchstart", "wheel"].forEach((type) => {
+            showcaseTrack.addEventListener(type, () => {
+                showcaseTarget = null;
+            }, { passive: true });
+        });
+
+        // Arrow keys move one slide when the track itself has focus (carousel mode only).
+        showcaseTrack.addEventListener("keydown", (event) => {
+            if (event.target !== showcaseTrack || !isCarousel()) return;
+
+            if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                stepShowcase(-1);
+            } else if (event.key === "ArrowRight") {
+                event.preventDefault();
+                stepShowcase(1);
+            }
+        });
+
+        if (showcaseVideo) {
+            showcaseVideo.addEventListener("play", refreshShowcaseToggle);
+            showcaseVideo.addEventListener("pause", refreshShowcaseToggle);
+
+            if (showcaseToggle) {
+                showcaseToggle.hidden = false;
+
+                showcaseToggle.addEventListener("click", () => {
+                    if (showcaseVideo.paused) {
+                        showcaseUserPaused = false;
+                        playVideo(showcaseVideo, refreshShowcaseToggle);
+                    } else {
+                        showcaseUserPaused = true;
+                        showcaseVideo.pause();
+                    }
+                });
+            }
+        }
+
+        observeVisibility(showcase, 0.25, (visible) => {
+            showcaseInView = visible;
+            syncShowcaseVideo();
+        });
+
+        if (typeof showcaseCarouselQuery.addEventListener === "function") {
+            showcaseCarouselQuery.addEventListener("change", applyShowcaseMode);
+        } else if (typeof showcaseCarouselQuery.addListener === "function") {
+            showcaseCarouselQuery.addListener(applyShowcaseMode);
+        }
+
+        applyShowcaseMode();
+    }
+}
+
+// CONTACT: decorative looping background video behind the contact rows.
+const contactVideo = document.querySelector(".contact__bg");
+
+if (contactVideo) {
+    const contactSection = contactVideo.closest(".contact");
+    const contactToggle = contactSection && contactSection.querySelector(".contact__toggle");
+
+    let contactInView = false;
+    let contactUserPaused = mediaReducedMotionQuery.matches;
+
+    const refreshContactToggle = () => {
+        setMediaToggleState(contactToggle, !contactVideo.paused);
+    };
+
+    const syncContactVideo = () => {
+        if (contactInView && !contactUserPaused) {
+            if (contactVideo.paused) playVideo(contactVideo, refreshContactToggle);
+        } else if (!contactVideo.paused) {
+            contactVideo.pause();
+        }
+    };
+
+    contactVideo.addEventListener("play", refreshContactToggle);
+    contactVideo.addEventListener("pause", refreshContactToggle);
+
+    if (contactToggle) {
+        contactToggle.hidden = false;
+
+        contactToggle.addEventListener("click", () => {
+            if (contactVideo.paused) {
+                contactUserPaused = false;
+                playVideo(contactVideo, refreshContactToggle);
+            } else {
+                contactUserPaused = true;
+                contactVideo.pause();
+            }
+        });
+    }
+
+    if (contactSection) {
+        observeVisibility(contactSection, 0.25, (visible) => {
+            contactInView = visible;
+            syncContactVideo();
+        });
     }
 }
 
