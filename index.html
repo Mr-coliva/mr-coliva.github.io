@@ -9,540 +9,281 @@
 
     <title>Carles Oliva | Maritime Professional</title>
 
+    <script>
+        try {
+            if (localStorage.getItem("preferred-theme") === "dark") {
+                document.documentElement.classList.add("dark-theme");
+            }
+        } catch (error) {
+            // Theme preference is optional; the light theme is the default.
+        }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    </head>
+</head>
 
 <body>
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- =========================
-         NAVIGATION
+         HEADER / NAVIGATION
     ========================== -->
 
     <header class="site-header">
 
-        <nav class="navbar">
+        <nav class="navbar container">
 
-            <a href="#home" class="logo">
-                CARLES OLIVA
-            </a>
+            <a href="#home" class="brand">Carles Oliva</a>
 
-            <button class="menu-toggle" aria-label="Open navigation menu">
-                ☰
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-controls="primary-nav"
+                aria-expanded="false"
+            >
+                <svg class="menu-toggle__icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path class="menu-toggle__line menu-toggle__line--top" d="M4 9h16"/>
+                    <path class="menu-toggle__line menu-toggle__line--bottom" d="M4 15h16"/>
+                </svg>
+                <span class="menu-toggle__text">Menu</span>
             </button>
 
-            <ul class="nav-links">
+            <ul class="nav-links" id="primary-nav">
 
-                <li>
-                    <a href="#about">About</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#deckhand-profile">Profile</a>
                 </li>
 
-                <li>
-                    <a href="#why-me">Why Me</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#qualifications">Qualifications</a>
                 </li>
 
-                <li>
-                    <a href="#deckhand-profile">Profile</a>
-                </li>
-                <li>
-                    <a href="#experience">Experience</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#experience">Experience</a>
                 </li>
 
-                <li>
-                    <a href="#qualifications">Qualifications</a>
+                <li class="nav-item nav-gallery" hidden>
+                    <a class="nav-link" href="#gallery">Gallery</a>
                 </li>
 
-                <li>
-                    <a href="#cover-letter">Cover Letter</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cv">CV</a>
                 </li>
 
-                <li>
-                    <a href="#cv">CV</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
                 </li>
 
-                
-                <li>
-                    <a href="#contact">Contact</a>
-                </li>
-
-                <li class="language-menu">
-                    <button
-                        class="language-toggle"
-                        type="button"
-                        aria-expanded="false"
-                        aria-controls="language-options"
-                    >
-                        Idioma
-                    </button>
-
-                    <ul class="language-options" id="language-options">
-                        <li>
-                            <button type="button" data-lang="en">English</button>
-                        </li>
-                        <li>
-                            <button type="button" data-lang="es">Español</button>
-                        </li>
-                        <li>
-                            <button type="button" data-lang="ca">Català</button>
-                        </li>
-                    </ul>
+                <li class="language-item">
+                    <div class="language-switch" role="group" aria-label="Language">
+                        <button type="button" data-lang="en" lang="en" aria-pressed="true">EN<span class="visually-hidden"> English</span></button>
+                        <button type="button" data-lang="es" lang="es" aria-pressed="false">ES<span class="visually-hidden"> Español</span></button>
+                        <button type="button" data-lang="ca" lang="ca" aria-pressed="false">CA<span class="visually-hidden"> Català</span></button>
+                    </div>
                 </li>
 
                 <li class="theme-menu">
+                    <!-- Both icons are present; CSS shows the moon in light mode and the sun under html.dark-theme. -->
                     <button
                         class="theme-toggle"
                         type="button"
                         aria-pressed="false"
                     >
-                        ☾ Oscuro
+                        <span class="theme-toggle-icon" aria-hidden="true">
+                            <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>
+                            </svg>
+                            <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <circle cx="12" cy="12" r="4"/>
+                                <path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/>
+                            </svg>
+                        </span>
+                        <span class="theme-toggle-text">Dark theme</span>
                     </button>
                 </li>
 
             </ul>
-
 
         </nav>
 
     </header>
 
 
-    <main>
+    <main id="main" tabindex="-1">
 
         <!-- =========================
              HERO
         ========================== -->
 
-        <section id="home" class="hero">
+        <section id="home" class="hero" aria-labelledby="hero-title">
 
-            <div class="hero-layout">
+            <div class="hero__inner container">
 
-                        <div class="hero-content">
-                    
-                            <p class="eyebrow">
-                                YACHT CREW • MARITIME PROFESSIONAL
-                            </p>
-                    
-                            <h1>
-                                CARLES OLIVA
-                            </h1>
-                    
-                            <h2>
-                                Junior Deckhand
-                            </h2>
-                    
-                            <p class="hero-description">
-                                Maritime professional with a strong passion for the sea,
-                                safety and professional development within the yachting industry.
-                            </p>
-                    
-                            <div class="hero-buttons">
-                    
-                                <a href="#cv" class="button button-primary">
-                                    View My CV
-                                </a>
-                    
-                                <a href="#contact" class="button button-secondary">
-                                    Contact Me
-                                </a>
-                    
-                            </div>
-                    
+                <div class="hero__text">
+
+                    <h1 id="hero-title" class="hero__name">Carles Oliva</h1>
+
+                    <p class="hero__role">Junior Deckhand</p>
+
+                    <p class="hero__lead">
+                        Maritime professional with STCW training and lifesaving
+                        experience, ready to join a yacht crew.
+                    </p>
+
+                    <dl class="hero__facts">
+                        <div class="hero__fact">
+                            <dt class="hero__fact-label">Certified</dt>
+                            <dd class="hero__fact-value">STCW Basic Training, RFPNW, RFPEW</dd>
                         </div>
-                    
-                    
-                        <div class="hero-image">
-                    
-                            <img
-                                src="images/profile.jpg"
-                                alt="Carles Oliva - Maritime Professional"
-                            >
-                    
+                        <div class="hero__fact">
+                            <dt class="hero__fact-label">Based in</dt>
+                            <dd class="hero__fact-value">Barcelona</dd>
                         </div>
-                    
+                        <div class="hero__fact">
+                            <dt class="hero__fact-label">Available for</dt>
+                            <dd class="hero__fact-value">Yacht crew and maritime positions</dd>
+                        </div>
+                    </dl>
+
+                    <div class="hero__actions">
+
+                        <a href="documents/CV.pdf" class="button button--primary" target="_blank" rel="noopener" data-document="cv">
+                            <svg class="button__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>
+                            </svg>
+                            <span>Download CV</span><span class="visually-hidden"> (opens in a new tab)</span>
+                        </a>
+
+                        <a href="#contact" class="button button--secondary">Contact Me</a>
+
                     </div>
+
+                </div>
+
+                <div class="hero__portrait">
+                    <!-- width/height set the 3:4 aspect ratio for layout; confirm against the real file size. -->
+                    <img
+                        src="images/profile.jpg"
+                        alt="Carles Oliva - Maritime Professional"
+                        width="896"
+                        height="1195"
+                        decoding="async"
+                        fetchpriority="high"
+                    >
+                </div>
+
+            </div>
+
         </section>
 
 
         <!-- =========================
-             ABOUT
+             DECKHAND PROFILE
         ========================== -->
 
-        <section id="about" class="section">
+        <section id="deckhand-profile" class="section profile" aria-labelledby="profile-title">
 
-                <div class="section-heading">
-                
-                    <p class="eyebrow">
-                        PROFILE
-                    </p>
-                
-                    <h2>
-                        About Me
-                    </h2>
-                
-                </div>
-                
-                <div class="section-content">
-                
-                    <p>
-                        I am a maritime professional based in Barcelona, with a strong
-                        vocation for the sea and a clear goal of developing my career
-                        within the yachting industry.
-                    </p>
-                
-                    <p>
-                        My professional background combines maritime experience,
-                        lifesaving responsibilities and customer-facing roles.
-                        Working as a lifeguard has strengthened my ability to remain
-                        calm under pressure, act quickly and work effectively as part
-                        of a team.
-                    </p>
-                
-                    <p>
-                        I am particularly interested in junior deckhand positions,
-                        where I can contribute with a strong work ethic, adaptability
-                        and willingness to learn while continuing to develop my
-                        practical seamanship skills.
-                    </p>
-                
-                </div>
-
-        </section>
-
-        <!-- =========================
-     WHY ME
-========================== -->
-
-<section id="why-me" class="section section-alt">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            PROFESSIONAL PROFILE
-        </p>
-
-        <h2>
-            Why Me?
-        </h2>
-
-    </div>
-
-
-    <div class="strength-grid">
-
-
-        <article class="strength-item">
-
-            <span class="strength-number">
-                01
-            </span>
-
-            <div>
-
-                <h3>
-                    Safety & Responsibility
-                </h3>
-
-                <p>
-                    Strong safety awareness developed through maritime
-                    training and professional lifeguard experience in
-                    demanding coastal environments.
-                </p>
-
-            </div>
-
-        </article>
-
-
-        <article class="strength-item">
-
-            <span class="strength-number">
-                02
-            </span>
-
-            <div>
-
-                <h3>
-                    Maritime Training
-                </h3>
-
-                <p>
-                    STCW qualifications combined with ongoing maritime
-                    training and a clear commitment to developing a
-                    professional career at sea.
-                </p>
-
-            </div>
-
-        </article>
-
-
-        <article class="strength-item">
-
-            <span class="strength-number">
-                03
-            </span>
-
-            <div>
-
-                <h3>
-                    Adaptability
-                </h3>
-
-                <p>
-                    Comfortable working in demanding environments,
-                    learning new procedures and adapting to operational
-                    requirements.
-                </p>
-
-            </div>
-
-        </article>
-
-
-        <article class="strength-item">
-
-            <span class="strength-number">
-                04
-            </span>
-
-            <div>
-
-                <h3>
-                    Teamwork & Service
-                </h3>
-
-                <p>
-                    Experience working closely with teams and interacting
-                    with the public in safety-critical and
-                    customer-facing environments.
-                </p>
-
-            </div>
-
-        </article>
-
-
-    </div>
-
-</section>
-
-
-
-
-        <!-- =========================
-             EXPERIENCE
-        ========================== -->
-
-                    <section id="deckhand-profile" class="section">
-    <div class="section-header">
-        <span class="section-label">DECKHAND PROFILE</span>
-        <h2>What I Bring On Board</h2>
-        <p>
-            A practical foundation built around safety, maritime training,
-            adaptability and a strong willingness to learn and contribute
-            as part of a professional crew.
-        </p>
-    </div>
-
-    <div class="capabilities-grid">
-
-        <div class="capability-card">
-            <div class="capability-number">01</div>
-            <h3>Safety & Emergency Response</h3>
-            <p>
-                Professional lifeguard experience in a demanding coastal
-                environment, with a strong focus on prevention, vigilance,
-                emergency response and maintaining composure under pressure.
-            </p>
-        </div>
-
-        <div class="capability-card">
-            <div class="capability-number">02</div>
-            <h3>Deck Operations</h3>
-            <p>
-                Maritime training covering navigational watchkeeping,
-                seamanship fundamentals, safety procedures and the
-                responsibilities associated with professional deck operations.
-            </p>
-        </div>
-
-        <div class="capability-card">
-            <div class="capability-number">03</div>
-            <h3>Seamanship & Maritime Skills</h3>
-            <p>
-                Merchant Navy watchkeeping qualifications combined with
-                recreational boating experience and ongoing professional
-                maritime training.
-            </p>
-        </div>
-
-        <div class="capability-card">
-            <div class="capability-number">04</div>
-            <h3>Tender & Water Activities</h3>
-            <p>
-                Training and experience related to RWC and Jet Ski operations,
-                diving and water-based activities, supported by a strong
-                understanding of aquatic safety.
-            </p>
-        </div>
-
-        <div class="capability-card">
-            <div class="capability-number">05</div>
-            <h3>Practical & Adaptable</h3>
-            <p>
-                Comfortable working in physically demanding environments,
-                following procedures and adapting quickly to operational
-                requirements while continuing to develop practical seamanship.
-            </p>
-        </div>
-
-        <div class="capability-card">
-            <div class="capability-number">06</div>
-            <h3>Crew & Guest Service</h3>
-            <p>
-                Customer-facing experience as a professional tour guide,
-                combined with a team-oriented approach and the ability to
-                communicate effectively with an international clientele.
-            </p>
-        </div>
-
-    </div>
-
-    <div class="capability-footer">
-        <span>CORE APPROACH</span>
-        <strong>Safety first · Learn fast · Work hard · Support the crew</strong>
-    </div>
-</section>
-
-        
-
-                    <section id="experience" class="section">
-                <div class="section-header">
-                    <span class="section-label">EXPERIENCE & PROGRESSION</span>
-                    <h2>Maritime Journey</h2>
-                    <p>
-                        A progressive path combining professional responsibility,
-                        maritime training and a clear commitment to the yachting industry.
+            <div class="moment">
+                <div class="container">
+                    <p class="moment__statement">
+                        <span class="moment__line">Safety first.</span>
+                        <span class="moment__line">Learn fast.</span>
+                        <span class="moment__line">Work hard.</span>
+                        <span class="moment__line">Support the crew.</span>
                     </p>
                 </div>
-            
-                <div class="timeline">
-            
-                    <div class="timeline-item">
-                        <div class="timeline-marker">2025</div>
-            
-                        <div class="timeline-content">
-                            <span class="timeline-category">PROFESSIONAL EXPERIENCE</span>
-                            <h3>Lifeguard — Castelldefels Beach</h3>
-            
-                            <p>
-                                Seasonal lifeguard position in a demanding coastal environment,
-                                focused on public safety, constant surveillance, prevention
-                                and emergency response.
-                            </p>
-            
-                            <div class="timeline-tags">
-                                <span>Safety</span>
-                                <span>Emergency Response</span>
-                                <span>Teamwork</span>
-                            </div>
-                        </div>
-                    </div>
-            
-            
-                    <div class="timeline-item">
-                        <div class="timeline-marker">2026</div>
-            
-                        <div class="timeline-content">
-                            <span class="timeline-category">PROFESSIONAL EXPERIENCE</span>
-                            <h3>Lifeguard — Castelldefels Beach</h3>
-            
-                            <p>
-                                Continued professional lifeguard experience in a high-responsibility
-                                coastal environment, working as part of a coordinated emergency
-                                response team and operating effectively under pressure.
-                            </p>
-            
-                            <div class="timeline-tags">
-                                <span>Public Safety</span>
-                                <span>Emergency Response</span>
-                                <span>High Responsibility</span>
-                            </div>
-                        </div>
-                    </div>
-            
-            
-                    <div class="timeline-item">
-                        <div class="timeline-marker">STCW</div>
-            
-                        <div class="timeline-content">
-                            <span class="timeline-category">MARITIME TRAINING</span>
-                            <h3>Merchant Navy & STCW Training</h3>
-            
-                            <p>
-                                Completed STCW training and merchant navy qualifications covering
-                                navigational watchkeeping, engineering watchkeeping, basic safety
-                                and medical first aid.
-                            </p>
-            
-                            <div class="timeline-tags">
-                                <span>STCW</span>
-                                <span>Deck</span>
-                                <span>Engineering</span>
-                                <span>Safety</span>
-                            </div>
-                        </div>
-                    </div>
-            
-            
-                    <div class="timeline-item">
-                        <div class="timeline-marker">NOW</div>
-            
-                        <div class="timeline-content">
-                            <span class="timeline-category">CURRENT DEVELOPMENT</span>
-                            <h3>Continuing Maritime Education</h3>
-            
-                            <p>
-                                Currently expanding my maritime qualifications through Passenger
-                                Ship Training, Restricted GMDSS training and Port Operations
-                                Skipper studies.
-                            </p>
-            
-                            <div class="timeline-tags">
-                                <span>Passenger Ships</span>
-                                <span>GMDSS</span>
-                                <span>Port Operations</span>
-                            </div>
-                        </div>
-                    </div>
-            
-            
-                    <div class="timeline-item timeline-future">
-                        <div class="timeline-marker">NEXT</div>
-            
-                        <div class="timeline-content">
-                            <span class="timeline-category">CAREER GOAL</span>
-                            <h3>Yacht Crew — Junior Deckhand</h3>
+            </div>
 
-                            <p>
-                                My next professional step is to join a yacht crew where I can
-                                apply my maritime training, develop practical seamanship skills
-                                and continue growing within the yachting industry.
-                            </p>
+            <div class="profile__body container">
 
-                            <div class="timeline-tags">
-                                <span>Yachting</span>
-                                <span>Deckhand</span>
-                                <span>Seamanship</span>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="profile__intro">
+                    <h2 id="profile-title" class="section__title">What I bring on board</h2>
+                    <p class="section__lead">
+                        Based in Barcelona, I combine maritime training with lifesaving and
+                        customer-facing experience. Lifeguard work has taught me to stay calm
+                        under pressure, act quickly and work as part of a team. I am looking
+                        for a junior deckhand position where I can keep developing practical
+                        seamanship.
+                    </p>
                 </div>
 
+                <ul class="capabilities">
+
+                    <li class="capability">
+                        <h3 class="capability__title" id="cap-1-title">Safety and emergency response</h3>
+                        <p class="capability__key">Lifeguard: vigilance and composure under pressure.</p>
+                        <div class="capability__detail" id="cap-1-detail"><div class="capability__detail-inner">
+                            <p class="capability__text">
+                                Lifeguard on a demanding coastline: prevention, vigilance and
+                                composure under pressure.
+                            </p>
+                        </div></div>
+                    </li>
+
+                    <li class="capability">
+                        <h3 class="capability__title" id="cap-2-title">Deck operations</h3>
+                        <p class="capability__key">Watchkeeping, seamanship and on-board safety training.</p>
+                        <div class="capability__detail" id="cap-2-detail"><div class="capability__detail-inner">
+                            <p class="capability__text">
+                                Trained in navigational watchkeeping, seamanship fundamentals and
+                                on-board safety procedures.
+                            </p>
+                        </div></div>
+                    </li>
+
+                    <li class="capability">
+                        <h3 class="capability__title" id="cap-3-title">Seamanship</h3>
+                        <p class="capability__key">STCW deck and engine rating certificates and recreational skipper licence (PER).</p>
+                        <div class="capability__detail" id="cap-3-detail"><div class="capability__detail-inner">
+                            <p class="capability__text">
+                                Merchant Navy watchkeeping certificates, a recreational skipper
+                                licence and ongoing professional training.
+                            </p>
+                        </div></div>
+                    </li>
+
+                    <li class="capability">
+                        <h3 class="capability__title" id="cap-4-title">Tenders and water activities</h3>
+                        <p class="capability__key">Jet ski instructor and open water diver.</p>
+                        <div class="capability__detail" id="cap-4-detail"><div class="capability__detail-inner">
+                            <p class="capability__text">
+                                Jet ski and RWC operator and instructor, open water diver, with a
+                                strong understanding of aquatic safety.
+                            </p>
+                        </div></div>
+                    </li>
+
+                    <li class="capability">
+                        <h3 class="capability__title" id="cap-5-title">Practical and adaptable</h3>
+                        <p class="capability__key">Physical work, procedures and quick adaptation.</p>
+                        <div class="capability__detail" id="cap-5-detail"><div class="capability__detail-inner">
+                            <p class="capability__text">
+                                Comfortable with physical work, learning and following procedures,
+                                and adapting quickly to operational needs.
+                            </p>
+                        </div></div>
+                    </li>
+
+                    <li class="capability">
+                        <h3 class="capability__title" id="cap-6-title">Crew and guest service</h3>
+                        <p class="capability__key">Tour guide with an international clientele.</p>
+                        <div class="capability__detail" id="cap-6-detail"><div class="capability__detail-inner">
+                            <p class="capability__text">
+                                Experience as a professional tour guide, working in teams and with
+                                an international clientele.
+                            </p>
+                        </div></div>
+                    </li>
+
+                </ul>
+
+            </div>
 
         </section>
 
@@ -551,562 +292,325 @@
              QUALIFICATIONS
         ========================== -->
 
-        <section id="qualifications" class="section">
+        <section id="qualifications" class="section section--band qualifications" aria-labelledby="qualifications-title">
 
-    <div class="section-heading">
+            <div class="container">
 
-        <p class="eyebrow">
-            MARITIME QUALIFICATIONS
-        </p>
+                <div class="section__head">
+                    <h2 id="qualifications-title" class="section__title">Qualifications</h2>
+                    <p class="section__lead">
+                        Certified in navigational watchkeeping, engineering
+                        watchkeeping, basic safety and medical first aid.
+                    </p>
+                </div>
 
-        <h2>
-            Qualifications
-        </h2>
+                <!-- A. STCW certificates (all four issued by ISM on the previous site) -->
+                <div class="qualifications__group qualifications__group--stcw">
 
-    </div>
+                    <h3 class="qualifications__heading">STCW certificates</h3>
 
+                    <ul class="stcw-plates">
 
-    <!-- =========================
-         STCW CERTIFICATES
-    ========================== -->
+                        <li class="stcw-plate">
+                            <p class="stcw-plate__code">A-II/4</p>
+                            <p class="stcw-plate__title">Rating Forming Part of a Navigational Watch</p>
+                            <p class="stcw-plate__abbr">RFPNW</p>
+                        </li>
 
-    <div class="qualification-category">
+                        <li class="stcw-plate">
+                            <p class="stcw-plate__code">A-III/4</p>
+                            <p class="stcw-plate__title">Rating Forming Part of an Engineering Watch</p>
+                            <p class="stcw-plate__abbr">RFPEW</p>
+                        </li>
 
-        <div class="qualification-category-heading">
+                        <li class="stcw-plate">
+                            <p class="stcw-plate__code">A-VI/1</p>
+                            <p class="stcw-plate__title">Basic Safety Training</p>
+                            <p class="stcw-plate__abbr">STCW Basic Training</p>
+                        </li>
 
-            <p class="eyebrow">
-                PROFESSIONAL MARITIME TRAINING
-            </p>
+                        <li class="stcw-plate">
+                            <p class="stcw-plate__code">A-VI/4</p>
+                            <p class="stcw-plate__title">Initial Specific Medical Training</p>
+                            <p class="stcw-plate__abbr">Medical Training</p>
+                            <p class="stcw-plate__meta">First aid and medical assistance on board</p>
+                        </li>
 
-            <h3>
-                STCW Certificates — Completed
-            </h3>
+                    </ul>
 
-        </div>
-
-
-        <div class="qualification-grid">
-
-
-            <article class="qualification-card stcw-card">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-badge">
-                        STCW
-                    </span>
-
-                    <span class="qualification-code">
-                        A-II/4
-                    </span>
+                    <p class="stcw-plates__issuer">Issued by Instituto Social de la Marina (ISM)</p>
 
                 </div>
 
-                <h3>
-                    Rating Forming Part of a Navigational Watch
-                </h3>
+                <div class="qualifications__columns">
 
-                <p class="qualification-short">
-                    RFPNW
-                </p>
+                    <!-- B. In progress -->
+                    <div class="qualifications__group qualifications__group--progress">
 
-                <p>
-                    Professional maritime qualification for
-                    navigational watchkeeping duties.
-                </p>
+                        <h3 class="qualifications__heading">In progress</h3>
 
-                <span class="qualification-provider">
-                    Instituto Social de la Marina (ISM)
-                </span>
+                        <ul class="progress-list">
 
-            </article>
+                            <li class="progress-item">
+                                <span class="progress-item__marker" aria-hidden="true"></span>
+                                <div class="progress-item__body">
+                                    <p class="progress-item__name">Passenger Ship Training</p>
+                                    <p class="progress-item__code">STCW A-V/2-1</p>
+                                    <p class="progress-item__meta">Passenger safety, emergency procedures and crowd management</p>
+                                </div>
+                            </li>
 
+                            <li class="progress-item">
+                                <span class="progress-item__marker" aria-hidden="true"></span>
+                                <div class="progress-item__body">
+                                    <p class="progress-item__name">Restricted Operator's Certificate — GMDSS</p>
+                                    <p class="progress-item__meta">Global Maritime Distress and Safety System</p>
+                                </div>
+                            </li>
 
-            <article class="qualification-card stcw-card">
+                            <li class="progress-item">
+                                <span class="progress-item__marker" aria-hidden="true"></span>
+                                <div class="progress-item__body">
+                                    <p class="progress-item__name">Port Operations Skipper</p>
+                                    <p class="progress-item__meta">Escola de Capacitació Nàuticopesquera (ENPC)</p>
+                                </div>
+                            </li>
 
-                <div class="qualification-top">
+                        </ul>
 
-                    <span class="qualification-badge">
-                        STCW
-                    </span>
+                    </div>
 
-                    <span class="qualification-code">
-                        A-III/4
-                    </span>
+                    <!-- C. Additional qualifications (ledger: name left, issuer right) -->
+                    <div class="qualifications__group qualifications__group--additional">
 
-                </div>
+                        <h3 class="qualifications__heading">Additional qualifications</h3>
 
-                <h3>
-                    Rating Forming Part of an Engineering Watch
-                </h3>
+                        <ul class="ledger">
 
-                <p class="qualification-short">
-                    RFPEW
-                </p>
+                            <li class="ledger__row">
+                                <div class="ledger__item">
+                                    <p class="ledger__name">Recreational Craft Skipper (PER)</p>
+                                    <p class="ledger__meta">Navigation and seamanship</p>
+                                </div>
+                                <p class="ledger__issuer">Escola Port</p>
+                            </li>
 
-                <p>
-                    Professional maritime qualification for
-                    engineering watchkeeping duties.
-                </p>
+                            <li class="ledger__row">
+                                <div class="ledger__item">
+                                    <p class="ledger__name">Jet Ski / RWC Operator &amp; Instructor</p>
+                                </div>
+                                <p class="ledger__issuer">FMNM</p>
+                            </li>
 
-                <span class="qualification-provider">
-                    Instituto Social de la Marina (ISM)
-                </span>
+                            <li class="ledger__row">
+                                <div class="ledger__item">
+                                    <p class="ledger__name">Open Water Diver</p>
+                                    <p class="ledger__meta">Recreational scuba diving</p>
+                                </div>
+                                <p class="ledger__issuer">Divestar Ibiza</p>
+                            </li>
 
-            </article>
+                            <li class="ledger__row">
+                                <div class="ledger__item">
+                                    <p class="ledger__name">Automated External Defibrillator (AED)</p>
+                                </div>
+                                <p class="ledger__issuer">ISEI</p>
+                            </li>
 
+                            <li class="ledger__row">
+                                <div class="ledger__item">
+                                    <p class="ledger__name">Natural Waters Lifeguard</p>
+                                </div>
+                                <p class="ledger__issuer">ISEI</p>
+                            </li>
 
-            <article class="qualification-card stcw-card">
+                        </ul>
 
-                <div class="qualification-top">
-
-                    <span class="qualification-badge">
-                        STCW
-                    </span>
-
-                    <span class="qualification-code">
-                        A-VI/1
-                    </span>
-
-                </div>
-
-                <h3>
-                    Basic Safety Training
-                </h3>
-
-                <p class="qualification-short">
-                    STCW Basic Training
-                </p>
-
-                <p>
-                    Fundamental safety training for professional
-                    seafarers working on board.
-                </p>
-
-                <span class="qualification-provider">
-                    Instituto Social de la Marina (ISM)
-                </span>
-
-            </article>
-
-
-            <article class="qualification-card stcw-card">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-badge">
-                        STCW
-                    </span>
-
-                    <span class="qualification-code">
-                        A-VI/4
-                    </span>
+                    </div>
 
                 </div>
 
-                <h3>
-                    Initial Specific Medical Training
-                </h3>
-
-                <p class="qualification-short">
-                    Medical Training
+                <p class="qualifications__note">
+                    Supporting certificates and documentation are available upon request.
                 </p>
 
-                <p>
-                    Maritime medical training covering first aid
-                    and medical assistance on board.
-                </p>
-
-                <span class="qualification-provider">
-                    Instituto Social de la Marina (ISM)
-                </span>
-
-            </article>
-
-        </div>
-
-    </div>
-
-            <div class="stcw-summary">
-
-                <span class="stcw-summary-label">
-                    STCW PROFILE
-                </span>
-
-                <p>
-                    Certified in navigational watchkeeping, engineering
-                    watchkeeping, basic safety and medical first aid.
-                </p>
-
-            </div>
-
-
-    <!-- =========================
-         STCW IN PROGRESS
-    ========================== -->
-
-    <div class="qualification-category">
-
-        <div class="qualification-category-heading">
-
-            <p class="eyebrow">
-                CURRENT TRAINING
-            </p>
-
-            <h3>
-                STCW Training in Progress
-            </h3>
-
-        </div>
-
-
-        <div class="qualification-grid">
-
-
-            <article class="qualification-card stcw-card in-progress">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-badge">
-                        STCW
-                    </span>
-
-                    <span class="qualification-status">
-                        CURRENTLY STUDYING
-                    </span>
-
-                </div>
-
-                <h3>
-                    Passenger Ship Training
-                </h3>
-
-                <p class="qualification-short">
-                    STCW A-V/2-1
-                </p>
-
-                <p>
-                    Training focused on passenger safety,
-                    emergency procedures and crowd management.
-                </p>
-
-                <span class="qualification-provider">
-                    In progress
-                </span>
-
-            </article>
-
-
-            <article class="qualification-card stcw-card in-progress">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-badge">
-                        STCW
-                    </span>
-
-                    <span class="qualification-status">
-                        IN PROGRESS
-                    </span>
-
-                </div>
-
-                <h3>
-                    Restricted Operator's Certificate — GMDSS
-                </h3>
-
-                <p class="qualification-short">
-                    Global Maritime Distress and Safety System
-                </p>
-
-                <p>
-                    Training for restricted radio operation within
-                    the Global Maritime Distress and Safety System.
-                </p>
-
-                <span class="qualification-provider">
-                    In progress
-                </span>
-
-            </article>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         OTHER QUALIFICATIONS
-    ========================== -->
-
-    <div class="qualification-category">
-
-        <div class="qualification-category-heading">
-
-            <p class="eyebrow">
-                ADDITIONAL TRAINING
-            </p>
-
-            <h3>
-                Other Maritime & Professional Qualifications
-            </h3>
-
-        </div>
-
-
-        <div class="qualification-grid">
-
-
-            <article class="qualification-card">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-type">
-                        MARITIME
-                    </span>
-
-                </div>
-
-                <h3>
-                    Recreational Craft Skipper
-                </h3>
-
-                <p class="qualification-short">
-                    PER
-                </p>
-
-                <p>
-                    Recreational boating qualification covering
-                    navigation and seamanship.
-                </p>
-
-                <span class="qualification-provider">
-                    Escola Port
-                </span>
-
-            </article>
-
-
-            <article class="qualification-card in-progress">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-type">
-                        IN PROGRESS
-                    </span>
-
-                </div>
-
-                <h3>
-                    Port Operations Skipper
-                </h3>
-
-                <p>
-                    Professional maritime qualification currently
-                    being studied.
-                </p>
-
-                <span class="qualification-provider">
-                    Escola de Capacitació Nàuticopesquera (ENPC)
-                </span>
-
-            </article>
-
-
-            <article class="qualification-card">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-type">
-                        WATERCRAFT
-                    </span>
-
-                </div>
-
-                <h3>
-                    Jet Ski / RWC Operator & Instructor
-                </h3>
-
-                <p>
-                    Training in personal watercraft operation
-                    and instruction.
-                </p>
-
-                <span class="qualification-provider">
-                    FMNM
-                </span>
-
-            </article>
-
-
-            <article class="qualification-card">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-type">
-                        DIVING
-                    </span>
-
-                </div>
-
-                <h3>
-                    Open Water Diver
-                </h3>
-
-                <p>
-                    Recreational scuba diving certification.
-                </p>
-
-                <span class="qualification-provider">
-                    Divestar Ibiza
-                </span>
-
-            </article>
-
-
-            <article class="qualification-card">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-type">
-                        MEDICAL
-                    </span>
-
-                </div>
-
-                <h3>
-                    Automated External Defibrillator
-                </h3>
-
-                <p class="qualification-short">
-                    AED
-                </p>
-
-                <p>
-                    Training in the use of automated external
-                    defibrillation equipment.
-                </p>
-
-                <span class="qualification-provider">
-                    ISEI
-                </span>
-
-            </article>
-
-
-            <article class="qualification-card">
-
-                <div class="qualification-top">
-
-                    <span class="qualification-type">
-                        LIFESAVING
-                    </span>
-
-                </div>
-
-                <h3>
-                    Natural Waters Lifeguard
-                </h3>
-
-                <p>
-                    Professional lifeguard qualification for
-                    natural aquatic environments.
-                </p>
-
-                <span class="qualification-provider">
-                    ISEI
-                </span>
-
-            </article>
-
-        </div>
-
-    </div>
-
-            <div class="qualification-note">
-
-                <p>
-                    Supporting certificates and documentation are available
-                    upon request.
-                </p>
-
-            </div>
-
-</section>
-
-
-        <!-- =========================
-             COVER LETTER
-        ========================== -->
-
-        <section id="cover-letter" class="section section-alt">
-
-            <div class="cover-letter">
-
-                <p>
-                    Dear Captain,
-                </p>
-            
-                <p>
-                    I am seeking the opportunity to begin and develop my professional
-                    career within the yachting industry as a junior deckhand.
-                </p>
-            
-                <p>
-                    My maritime training, experience in lifesaving and strong
-                    motivation to work at sea have prepared me to contribute with
-                    responsibility, adaptability and a strong willingness to learn.
-                </p>
-            
-                <p>
-                    I am particularly interested in joining a professional crew
-                    where I can continue developing my practical seamanship skills
-                    and contribute positively to the operation of the vessel.
-                </p>
-            
-                
-                <a href="documents/Cover-Letter.pdf" class="button button-primary" target="_blank" data-document="cover-letter">
-                    Read Full Cover Letter
-                </a>
-
-            
             </div>
 
         </section>
 
 
         <!-- =========================
-             CV
+             EXPERIENCE
         ========================== -->
 
-        <section id="cv" class="section">
+        <section id="experience" class="section experience" aria-labelledby="experience-title">
 
-            <div class="section-heading">
+            <div class="container">
 
-                <p class="eyebrow">
-                    PROFESSIONAL DOCUMENT
-                </p>
+                <div class="section__head">
+                    <h2 id="experience-title" class="section__title">Experience</h2>
+                </div>
 
-                <h2>
-                    Curriculum Vitae
-                </h2>
+                <ol class="logbook">
+
+                    <li class="logbook__entry">
+                        <div class="logbook__date">
+                            <p class="logbook__years">2026 – present</p>
+                            <p class="logbook__span">Volunteer</p>
+                        </div>
+                        <div class="logbook__role">
+                            <h3 class="logbook__title">Rescue Boat Crew</h3>
+                            <p class="logbook__place">Spanish Red Cross · Salvamar-type rescue boat, approx. 10 m</p>
+                        </div>
+                        <ul class="logbook__duties">
+                            <li>Helming the rescue boat: practical boat handling and manoeuvring.</li>
+                            <li>Towing assistance and real-world maritime assistance and rescue operations as part of the crew.</li>
+                            <li>Drills and joint exercises with Salvamento Marítimo, Spain's maritime search and rescue service.</li>
+                        </ul>
+                    </li>
+
+                    <li class="logbook__entry">
+                        <div class="logbook__date">
+                            <p class="logbook__years">2025 – 2026</p>
+                            <p class="logbook__span">Two seasons</p>
+                        </div>
+                        <div class="logbook__role">
+                            <h3 class="logbook__title">Lifeguard</h3>
+                            <p class="logbook__place">Castelldefels Beach</p>
+                        </div>
+                        <ul class="logbook__duties">
+                            <li>Constant surveillance and prevention in a demanding coastal environment.</li>
+                            <li>Emergency response as part of a coordinated team.</li>
+                            <li>Public safety in a high-responsibility role, working effectively under pressure.</li>
+                        </ul>
+                    </li>
+
+                    <li class="logbook__entry logbook__entry--next">
+                        <div class="logbook__date">
+                            <p class="logbook__years logbook__years--next">Next step</p>
+                        </div>
+                        <div class="logbook__role">
+                            <h3 class="logbook__title">Junior Deckhand</h3>
+                        </div>
+                        <p class="logbook__summary">
+                            Joining a yacht crew to apply my maritime training and keep growing
+                            in the yachting industry.
+                        </p>
+                    </li>
+
+                </ol>
 
             </div>
 
-            <div class="cv-content">
+        </section>
 
-                <p>
-                    My complete professional CV includes my maritime qualifications,
-                    professional experience, training and additional skills.
-                </p>
-            
-                
-                <a href="documents/CV.pdf" class="button button-primary" target="_blank" data-document="cv">
-                    Download CV
-                </a>
 
-            
+        <!-- =========================
+             GALLERY (hidden until it has items)
+        ========================== -->
+
+        <section id="gallery" class="section gallery" hidden aria-labelledby="gallery-title">
+
+            <div class="container">
+
+                <div class="section__head">
+                    <h2 id="gallery-title" class="section__title">Gallery</h2>
+                </div>
+
+                <ul class="media-grid">
+                    <!--
+                        HOW TO ADD ITEMS
+                        The section and the "Gallery" nav item stay hidden until this list
+                        contains at least one <li class="media-item">; script.js then shows both.
+                        Only publish images/videos with permission. Captions are optional
+                        ("M/Y Name — Place") and only with publishing permission.
+
+                        Photo:
+                        <li class="media-item">
+                            <figure>
+                                <img src="media/photos/YYYY-MM-place-subject.jpg" width="1600" height="1067"
+                                     alt="Describe the scene" loading="lazy" decoding="async">
+                                <figcaption>M/Y Name — Place</figcaption>
+                            </figure>
+                        </li>
+
+                        Video (never autoplay or loop; add captions when there is speech):
+                        <li class="media-item">
+                            <figure>
+                                <video controls preload="metadata" playsinline
+                                       poster="media/video/posters/BASENAME.jpg" width="1920" height="1080">
+                                    <source src="media/video/BASENAME.mp4" type="video/mp4">
+                                    <track kind="captions" srclang="en" src="media/video/BASENAME.en.vtt" label="English">
+                                </video>
+                                <figcaption>M/Y Name — Place</figcaption>
+                            </figure>
+                        </li>
+
+                        Folder convention (folders are not created yet):
+                        media/photos/          photos, 1600px long edge, JPEG q~80 or WebP, under ~400 KB
+                        media/video/           H.264/AAC MP4, max 1080p, under ~20 MB
+                        media/video/posters/   poster frames, same basename as the video
+                        Any new English caption or alt text needs ES and CA keys in script.js.
+                    -->
+                </ul>
+
             </div>
+
+        </section>
+
+
+        <!-- =========================
+             CV AND COVER LETTER
+        ========================== -->
+
+        <section id="cv" class="section section--band docs-section" aria-labelledby="cv-title">
+
+            <div class="container">
+
+                <div class="section__head">
+                    <h2 id="cv-title" class="section__title">CV and cover letter</h2>
+                </div>
+
+                <div class="docs">
+
+                    <div class="docs__item docs__item--cv">
+                        <h3 class="docs__title">Curriculum Vitae</h3>
+                        <p class="docs__text">
+                            My complete professional CV includes my maritime qualifications,
+                            professional experience, training and additional skills.
+                        </p>
+                        <p class="docs__action">
+                            <a href="documents/CV.pdf" class="button button--primary" target="_blank" rel="noopener" data-document="cv">
+                                <svg class="button__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                    <path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>
+                                </svg>
+                                <span>Download CV</span><span class="visually-hidden"> (opens in a new tab)</span>
+                            </a>
+                            <span class="docs__format">PDF</span>
+                        </p>
+                    </div>
+
+                    <article id="cover-letter" class="docs__item docs__item--letter" aria-labelledby="cover-letter-title">
+                        <h3 id="cover-letter-title" class="docs__title">Cover Letter</h3>
+                        <p class="docs__salutation">Dear Captain,</p>
+                        <p class="docs__text">
+                            I am seeking the opportunity to begin and develop my professional
+                            career within the yachting industry as a junior deckhand.
+                        </p>
+                        <a href="documents/Cover-Letter.pdf" class="docs__link" target="_blank" rel="noopener" data-document="cover-letter">
+                            <span>Read full cover letter</span><span class="visually-hidden"> (opens in a new tab)</span>
+                            <svg class="docs__link-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M7 17 17 7M9 7h8v8"/>
+                            </svg>
+                        </a>
+                    </article>
+
+                </div>
+
+                <p class="docs__note">Available in English, Spanish and Catalan.</p>
+
+            </div>
+
         </section>
 
 
@@ -1114,49 +618,76 @@
              CONTACT
         ========================== -->
 
-        <section id="contact" class="section contact-section">
-    <div class="section-header">
-        <span class="section-label">CONTACT</span>
-        <h2>Let's Get In Touch</h2>
-        <p>
-            For yacht crew opportunities, maritime positions or professional enquiries,
-            I would be pleased to hear from you.
-        </p>
-    </div>
+        <section id="contact" class="section contact" aria-labelledby="contact-title">
 
-    <div class="contact-grid">
+            <div class="container contact__inner">
 
-        <a href="mailto:hiakaua@gmail.com" class="contact-card">
-            <span class="contact-label">EMAIL</span>
-            <h3>hiakaua@gmail.com</h3>
-            <p>
-                Send me an email for professional enquiries,
-                opportunities or further information.
-            </p>
-            <span class="contact-action">SEND EMAIL →</span>
-        </a>
+                <div class="contact__head">
+                    <h2 id="contact-title" class="section__title">Contact</h2>
+                    <p class="section__lead">Available for yacht crew opportunities and maritime positions</p>
+                </div>
 
+                <ul class="contact-rows">
 
-        <a href="https://t.me/carles_oliva"
-           class="contact-card"
-           target="_blank"
-           rel="noopener noreferrer">
+                    <li class="contact-rows__item">
+                        <a class="contact-row" href="mailto:hiakaua@gmail.com">
+                            <svg class="contact-row__icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                <path d="m3.5 6.5 8.5 6.5 8.5-6.5"/>
+                            </svg>
+                            <span class="contact-row__text">
+                                <span class="contact-row__service">Email</span>
+                                <span class="contact-row__handle">hiakaua@gmail.com</span>
+                                <span class="contact-row__hint">Send an email</span>
+                            </span>
+                            <svg class="contact-row__arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M7 17 17 7M9 7h8v8"/>
+                            </svg>
+                        </a>
+                    </li>
 
-            <span class="contact-label">TELEGRAM</span>
-            <h3>@carles_oliva</h3>
-            <p>
-                You can also contact me directly through Telegram.
-            </p>
-            <span class="contact-action">OPEN TELEGRAM →</span>
-        </a>
+                    <li class="contact-rows__item">
+                        <a class="contact-row" href="https://t.me/carles_oliva" target="_blank" rel="noopener noreferrer">
+                            <svg class="contact-row__icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M21.5 4 2.5 11.5l6.5 2.5 2.5 6.5 3.5-4.5 4.5 3.5z"/>
+                                <path d="m9 14 9.5-7.5"/>
+                            </svg>
+                            <span class="contact-row__text">
+                                <span class="contact-row__service">Telegram</span>
+                                <span class="contact-row__handle">@carles_oliva</span>
+                                <span class="contact-row__hint">Message on Telegram</span>
+                                <span class="visually-hidden"> (opens in a new tab)</span>
+                            </span>
+                            <svg class="contact-row__arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M7 17 17 7M9 7h8v8"/>
+                            </svg>
+                        </a>
+                    </li>
 
-    </div>
+                    <li class="contact-rows__item">
+                        <a class="contact-row" href="https://www.instagram.com/oliva_carles/" target="_blank" rel="noopener noreferrer">
+                            <svg class="contact-row__icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                                <circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/>
+                            </svg>
+                            <span class="contact-row__text">
+                                <span class="contact-row__service">Instagram</span>
+                                <span class="contact-row__handle">@oliva_carles</span>
+                                <span class="contact-row__hint">View Instagram profile</span>
+                                <span class="visually-hidden"> (opens in a new tab)</span>
+                            </span>
+                            <svg class="contact-row__arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M7 17 17 7M9 7h8v8"/>
+                            </svg>
+                        </a>
+                    </li>
 
-    <div class="contact-note">
-        <span>PROFESSIONAL CONTACT</span>
-        <strong>Available for yacht crew opportunities and maritime positions</strong>
-    </div>
-</section>
+                </ul>
+
+            </div>
+
+        </section>
 
     </main>
 
@@ -1167,13 +698,10 @@
 
     <footer class="site-footer">
 
-        <p>
-            © 2026 Carles Oliva
-        </p>
-
-        <p>
-            Maritime Professional
-        </p>
+        <div class="site-footer__inner container">
+            <p class="site-footer__copy">© 2026 Carles Oliva</p>
+            <p class="site-footer__role">Maritime Professional</p>
+        </div>
 
     </footer>
 
