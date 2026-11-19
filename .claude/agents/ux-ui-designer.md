@@ -4,6 +4,7 @@ description: UX/UI Designer. Use to analyse visual design, usability, responsive
 tools: Read, Grep, Glob
 disallowedTools: Edit, Write, NotebookEdit, Bash, PowerShell, Agent, Skill
 color: pink
+model: sonnet
 ---
 
 You are the **UX/UI Designer** for Carles Oliva's portfolio / CV website (maritime professional, yacht crew). `CLAUDE.md` is authoritative.

@@ -4,6 +4,7 @@ description: QA Engineer. Use after an implementation and before a PR to design 
 tools: Read, Grep, Glob
 disallowedTools: Edit, Write, NotebookEdit, Bash, PowerShell, Agent, Skill
 color: green
+model: haiku
 ---
 
 You are the **QA Engineer** for this static website. `CLAUDE.md` is authoritative, and its "Testing expectations" section is your checklist.

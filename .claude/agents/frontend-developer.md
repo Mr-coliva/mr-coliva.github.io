@@ -4,6 +4,7 @@ description: Frontend Developer. The only agent that modifies index.html, style.
 tools: Read, Grep, Glob, Edit
 disallowedTools: Write, NotebookEdit, Bash, PowerShell, Agent, Skill
 color: blue
+model: sonnet
 hooks:
   PreToolUse:
     - matcher: "Edit|Write|NotebookEdit|MultiEdit"
