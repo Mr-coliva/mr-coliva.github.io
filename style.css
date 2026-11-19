@@ -1225,9 +1225,10 @@ ul.logbook__duties {
    The section is always dark (video + navy scrim), in the light and the dark
    theme alike, so it re-points the colour tokens for everything inside it:
    title, lead, rows, hairlines, hover and the focus ring all pick them up.
-   Scrim plus the text patch below: at least 0.775 of #0E2233 behind the text.
-   Over a pure white frame that still leaves about 7.5:1 for --ink and about
-   5.5:1 for --ink-2 / --ink-3. */
+   The scrim is light (0.18 to 0.32 of #0E2233) so the video stays visible;
+   the text does not rely on a dark panel but on its text-shadow (set on
+   .contact__inner), and the icons on a drop-shadow. Contrast therefore depends
+   on the frame behind the text and has not been measured. */
 
 .contact {
   --ink: #F8F9FA;
@@ -1269,39 +1270,25 @@ ul.logbook__duties {
   pointer-events: none;
 }
 
-/* Light scrim over the whole video: 0.50 at the top to 0.62 at the bottom. */
+/* Light scrim over the whole video: 0.18 at the top to 0.32 at the bottom. */
 .contact__scrim {
   background-image: linear-gradient(
     to bottom,
-    rgba(14, 34, 51, 0.5),
-    rgba(14, 34, 51, 0.62)
+    rgba(14, 34, 51, 0.18),
+    rgba(14, 34, 51, 0.32)
   );
 }
 
 .contact__inner {
   position: relative;
   z-index: 1;
-  text-shadow: 0 1px 2px rgba(6, 16, 26, 0.55);
-}
-
-/* Text protection: a soft navy patch only where the text is, feathered by its
-   shadow, so the rest of the video stays light. Patch 0.55 over the 0.50-0.62
-   scrim is at least 0.775 navy behind every glyph (one patch behind the whole
-   content here; one per column from 64rem). */
-.contact__inner::before,
-.contact__head::before,
-.contact-rows::before {
-  position: absolute;
-  z-index: -1;
-  border-radius: var(--radius-m);
-  background-color: rgba(14, 34, 51, 0.55);
-  box-shadow: 0 0 2.5rem 1.25rem rgba(14, 34, 51, 0.55);
-  pointer-events: none;
-}
-
-.contact__inner::before {
-  content: "";
-  inset: calc(-1 * var(--space-5)) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-shadow:
+    0 0 1px rgba(0, 0, 0, 0.9),
+    0 1px 3px rgba(0, 0, 0, 0.75),
+    0 0 16px rgba(0, 0, 0, 0.45);
 }
 
 .contact__toggle {
@@ -1313,14 +1300,29 @@ ul.logbook__duties {
 
 .contact__head {
   margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+#contact-title {
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.contact-rows {
+  width: min(36rem, 100%);
+}
+
+.contact-row__icon,
+.contact-row__arrow {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
 }
 
 .contact-rows__item {
-  border-top: 1px solid var(--hairline);
+  border-top: 1px solid rgba(248, 249, 250, 0.45);
 }
 
 .contact-rows__item:last-child {
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid rgba(248, 249, 250, 0.45);
 }
 
 .contact-row {
@@ -1358,19 +1360,23 @@ ul.logbook__duties {
   color: var(--ink);
 }
 
+/* The text shadow would show a hidden underline, so it is only drawn on
+   hover and keyboard focus. */
 .contact-row__handle {
   min-width: 0;
   overflow-wrap: anywhere;
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
-  text-decoration-line: underline;
+  text-decoration-line: none;
   text-decoration-color: transparent;
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
   transition: text-decoration-color 150ms ease;
 }
 
-.contact-row:hover .contact-row__handle {
+.contact-row:hover .contact-row__handle,
+.contact-row:focus-visible .contact-row__handle {
+  text-decoration-line: underline;
   text-decoration-color: var(--accent);
 }
 
@@ -1934,18 +1940,18 @@ ul.logbook__duties {
     border-left: 0;
   }
 
-  /* In progress cols 1–5, additional cols 7–12 */
+  /* Additional cols 1–6, in progress cols 8–12 */
   .qualifications__columns {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: var(--grid-gap);
   }
 
-  .qualifications__group--progress {
-    grid-column: 1 / 6;
+  .qualifications__group--additional {
+    grid-column: 1 / 7;
   }
 
-  .qualifications__group--additional {
-    grid-column: 7 / -1;
+  .qualifications__group--progress {
+    grid-column: 8 / -1;
   }
 
   /* Logbook: dates 1–2, role 3–6, duties 7–12 */
@@ -1962,34 +1968,9 @@ ul.logbook__duties {
     grid-column: 7 / -1;
   }
 
-  /* Contact: heading cols 1–5, rows cols 7–12 */
-  .contact__inner {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--grid-gap);
-    align-items: start;
-  }
-
-  .contact__head {
-    position: relative;
-    grid-column: 1 / 6;
-    margin-bottom: 0;
-  }
-
+  /* Contact: centred at every width (see base rules); rows keep a reading width */
   .contact-rows {
-    position: relative;
-    grid-column: 7 / -1;
-  }
-
-  /* Text protection: one soft patch per column instead of one across the row */
-  .contact__inner::before {
-    content: none;
-  }
-
-  .contact__head::before,
-  .contact-rows::before {
-    content: "";
-    inset: calc(-1 * var(--space-5));
+    width: min(36rem, 100%);
   }
 }
 
@@ -2189,6 +2170,308 @@ ul.logbook__duties {
 @media (prefers-reduced-motion: reduce) and (min-width: 64rem) and (hover: hover) and (pointer: fine) {
   .capabilities.is-enhanced .capability__detail {
     transition: opacity 150ms ease;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   9. SCROLL AND EXPAND EFFECTS
+   Motion layer driven by script.js: the html.fx class is only added when
+   JavaScript is on and reduced motion is not requested.
+   --------------------------------------------------------- */
+
+/* 9.1 Header: hides on scroll down, returns on scroll up */
+.site-header {
+  transition: transform 420ms var(--ease-out);
+}
+
+.site-header.is-hidden {
+  transform: translateY(-100%);
+}
+
+/* 9.2 Reveal on scroll */
+html.fx .hero__text > *,
+html.fx .hero__portrait img {
+  animation: none;
+}
+
+html.fx .fx-r {
+  opacity: 0;
+  transform: translate3d(0, 2rem, 0);
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 1100ms var(--ease-out);
+  transition-delay: calc(var(--fx-d, 0) * 1ms);
+}
+
+html.fx .fx-m {
+  opacity: 0;
+  clip-path: inset(18% 0 0 0);
+  transform: translate3d(0, 3rem, 0);
+  transition:
+    opacity 700ms var(--ease-out),
+    clip-path 1200ms var(--ease-out),
+    transform 1200ms var(--ease-out);
+  transition-delay: calc(var(--fx-d, 0) * 1ms);
+}
+
+html.fx .fx-r.is-in,
+html.fx .fx-m.is-in {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transform: none;
+}
+
+/* 9.3 Headings word by word */
+.fx-w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.fx-w > span {
+  display: inline-block;
+}
+
+html.fx .fx-h .fx-w > span {
+  transform: translate3d(0, 110%, 0);
+  transition: transform 1000ms var(--ease-out);
+  transition-delay: calc(var(--i) * 75ms);
+}
+
+html.fx .fx-h.is-in .fx-w > span {
+  transform: none;
+}
+
+/* 9.4 Profile text: words appear from nothing as you scroll */
+.fx-ink > span {
+  transition:
+    opacity 500ms ease,
+    filter 600ms ease,
+    transform 700ms var(--ease-out);
+}
+
+html.fx .fx-ink > span {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translate3d(0, 0.35em, 0);
+}
+
+html.fx .fx-ink > span.on {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* 9.5 Floating contact button that becomes the Contact heading */
+.fx-contact {
+  position: fixed;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  z-index: 90;
+  display: inline-block;
+  padding: 0.7rem 1.35rem;
+  border-radius: 999px;
+  background-color: var(--ink);
+  color: var(--ground);
+  font-size: 1.0625rem;
+  white-space: nowrap;
+  text-decoration: none;
+  transform-origin: 0 0;
+  box-shadow: 0 0.5rem 1.75rem rgba(14, 34, 51, 0.22);
+  will-change: transform;
+}
+
+.fx-contact:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.fx-contact.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 150ms ease, visibility 0s linear 150ms;
+}
+
+html.fx-morph #contact-title {
+  opacity: 0;
+}
+
+html.fx-morph #contact-title.is-landed {
+  opacity: 1;
+}
+
+/* 9.6 Expandable items (Experience and Qualifications): same reveal as
+   "What I bring on board" */
+.fx-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  transition: color 150ms ease;
+}
+
+.fx-chevron {
+  flex: none;
+  color: var(--ink-3);
+  transition:
+    transform 240ms var(--ease-out),
+    color 150ms ease;
+}
+
+.fx-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 320ms var(--ease-out),
+    opacity 240ms ease;
+}
+
+.fx-detail-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fx-detail-inner > :first-child {
+  margin-top: var(--space-1);
+}
+
+.stcw-plate__code {
+  transition: color 150ms ease;
+}
+
+/* Desktop with mouse: open on hover or keyboard focus */
+.fx-group.is-hover .fx-chevron {
+  display: none;
+}
+
+.fx-group.is-hover .fx-toggle {
+  cursor: default;
+}
+
+.fx-group.is-hover .fx-item:hover .fx-toggle,
+.fx-group.is-hover .fx-item:focus-within .fx-toggle,
+.fx-group.is-hover .stcw-plate:hover .stcw-plate__code,
+.fx-group.is-hover .stcw-plate:focus-within .stcw-plate__code {
+  color: var(--accent);
+}
+
+.fx-group.is-hover .fx-item:hover .fx-detail,
+.fx-group.is-hover .fx-item:focus-within .fx-detail {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.fx-group.is-hover .fx-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Touch: tap to open; opening one closes the one that was open */
+.fx-group.is-accordion .fx-item {
+  position: relative;
+}
+
+.fx-group.is-accordion .fx-toggle {
+  min-height: 2.75rem;
+  cursor: pointer;
+}
+
+.fx-group.is-accordion .fx-item:not(.is-open) .fx-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.fx-group.is-accordion .fx-item.is-open .fx-toggle,
+.fx-group.is-accordion .stcw-plate.is-open .stcw-plate__code {
+  color: var(--accent);
+}
+
+.fx-group.is-accordion .fx-item.is-open .fx-chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.fx-group.is-accordion .fx-item.is-open .fx-detail {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+/* Qualifications: the abbreviation line becomes the visible label */
+.stcw-plate__abbr .fx-toggle {
+  min-height: 0;
+}
+
+.fx-group.is-accordion .stcw-plate__abbr .fx-toggle {
+  min-height: 2.25rem;
+}
+
+.ledger__row.fx-item {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.fx-detail .ledger__issuer {
+  max-width: none;
+  margin-top: var(--space-1);
+  text-align: left;
+  font-size: var(--fs-meta);
+}
+
+/* 9.7 Experience details keep the duties column */
+@media (max-width: 39.99rem) {
+  .logbook.is-accordion .logbook__entry {
+    row-gap: var(--space-2);
+  }
+}
+
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .logbook__detail {
+    grid-column: 6 / -1;
+  }
+}
+
+@media (min-width: 64rem) {
+  .logbook__detail {
+    grid-column: 7 / -1;
+  }
+}
+
+/* 9.8 Reduced motion: opacity and colour only; the header does not slide */
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+
+  .fx-contact {
+    transition: opacity 150ms ease;
+  }
+
+  .fx-contact.is-done {
+    transition: opacity 150ms ease, visibility 0s linear 150ms;
+  }
+
+  .fx-detail {
+    transition: opacity 150ms ease;
+  }
+
+  .fx-chevron {
+    transition: color 150ms ease;
   }
 }
 

@@ -1156,3 +1156,430 @@ function updateDocumentLinks(language) {
         }
     });
 }
+
+
+/* ========================================
+   SCROLL AND EXPAND EFFECTS
+   Header hide/show, reveal on scroll, word-by-word headings, expandable
+   items (hover on desktop, tap on touch) and the floating Contact button.
+   Styles live in section 9 of style.css.
+======================================== */
+
+(function () {
+    "use strict";
+
+    var root = document.documentElement;
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce) root.classList.add("fx");
+
+    /* ---------- Header: hide on scroll down, show on scroll up ---------- */
+    var header = document.querySelector(".site-header");
+    var lastY = window.scrollY;
+
+    function updateHeader() {
+        var y = window.scrollY;
+        var delta = y - lastY;
+        var menuOpen = document.body.classList.contains("menu-open");
+        var focusInside = header.contains(document.activeElement);
+
+        if (menuOpen || focusInside || y < 80) {
+            header.classList.remove("is-hidden");
+        } else if (delta > 6) {
+            header.classList.add("is-hidden");
+        } else if (delta < -6) {
+            header.classList.remove("is-hidden");
+        }
+        if (Math.abs(delta) > 6) lastY = y;
+    }
+
+    header.addEventListener("focusin", function () {
+        header.classList.remove("is-hidden");
+    });
+
+    /* ---------- Headings word by word ---------- */
+    var headings = Array.prototype.slice.call(
+        document.querySelectorAll("#hero-title, .section__title:not(#contact-title)")
+    );
+    var ink = document.querySelector(".profile__intro .section__lead");
+    // Original child nodes of each split element, put back before a language
+    // switch so applyLanguage() still finds its tracked English text nodes.
+    var savedNodes = new WeakMap();
+
+    function escapeHtml(text) {
+        return text.replace(/[&<>"]/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c];
+        });
+    }
+
+    function words(el) {
+        return el.textContent.trim().replace(/\s+/g, " ").split(" ");
+    }
+
+    function splitHeading(h) {
+        var list = words(h);
+        savedNodes.set(h, Array.prototype.slice.call(h.childNodes));
+        h.dataset.fxText = list.join(" ");
+        h.setAttribute("aria-label", h.dataset.fxText);
+        h.innerHTML = list.map(function (w, i) {
+            return '<span class="fx-w" aria-hidden="true"><span style="--i:' + i + '">' + escapeHtml(w) + "</span></span>";
+        }).join(" ");
+        h.classList.add("fx-h");
+    }
+
+    function splitInk(p) {
+        var list = words(p);
+        savedNodes.set(p, Array.prototype.slice.call(p.childNodes));
+        p.dataset.fxText = list.join(" ");
+        p.innerHTML = list.map(function (w) {
+            return "<span>" + escapeHtml(w) + "</span>";
+        }).join(" ");
+        p.classList.add("fx-ink");
+    }
+
+    function unsplit(el) {
+        if (!el.dataset.fxText) return;
+        var nodes = savedNodes.get(el);
+        if (nodes) {
+            el.textContent = "";
+            nodes.forEach(function (n) { el.appendChild(n); });
+            savedNodes.delete(el);
+        } else {
+            el.textContent = el.dataset.fxText;
+        }
+        el.removeAttribute("aria-label");
+        delete el.dataset.fxText;
+    }
+
+    function splitAll() {
+        headings.forEach(splitHeading);
+        if (ink) splitInk(ink);
+        updateInk();
+    }
+
+    // The language switch translates whole text nodes, so restore the plain
+    // text before it runs and split again once the new language is in place.
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest("[data-lang]")) return;
+        headings.forEach(unsplit);
+        if (ink) unsplit(ink);
+        setTimeout(splitAll, 0);
+    }, true);
+
+    /* ---------- Profile text appears with scroll ---------- */
+    function updateInk() {
+        if (!ink || !ink.classList.contains("fx-ink")) return;
+        var spans = ink.children;
+        var rect = ink.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var progress = (vh * 0.92 - rect.top) / (rect.height + vh * 0.35);
+        progress = Math.max(0, Math.min(1, progress));
+        var lit = Math.round(progress * spans.length);
+        for (var i = 0; i < spans.length; i++) {
+            spans[i].classList.toggle("on", i < lit);
+        }
+    }
+
+    /* ---------- Reveal on scroll ---------- */
+    var textTargets = [
+        ".hero__role", ".hero__lead", ".hero__fact", ".hero__actions",
+        ".section__lead:not(.profile__intro .section__lead)", ".capability",
+        ".qualifications__heading", ".stcw-plate", ".stcw-plates__issuer",
+        ".progress-item", ".ledger__row", ".qualifications__note",
+        ".logbook__entry", ".docs__item", ".docs__note", ".contact-rows__item",
+        ".site-footer__inner"
+    ];
+    var mediaTargets = [".hero__portrait", ".reel__video", ".showcase__slide"];
+
+    function tag(selectors, className) {
+        document.querySelectorAll(selectors.join(",")).forEach(function (el) {
+            el.classList.add(className);
+            var siblings = Array.prototype.filter.call(el.parentElement.children, function (s) {
+                return s.classList.contains(className);
+            });
+            el.style.setProperty("--fx-d", Math.min(siblings.indexOf(el), 6) * 90);
+        });
+    }
+
+    if (!reduce) {
+        tag(textTargets, "fx-r");
+        tag(mediaTargets, "fx-m");
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("is-in");
+            } else if (entry.boundingClientRect.top > 0) {
+                // Left through the bottom edge (scrolling up): reset it so the
+                // effect plays again on the next scroll down.
+                entry.target.classList.remove("is-in");
+            }
+        });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0 });
+
+    splitAll();
+    document.querySelectorAll(".fx-r, .fx-m, .fx-h").forEach(function (el) {
+        observer.observe(el);
+    });
+
+    /* ---------- Expandable items: hover on desktop, tap on touch ----------
+       Same behaviour as "What I bring on board": the details open on hover or
+       keyboard focus with a mouse, and on tap on touch screens, where opening
+       one item closes the one that was open. */
+    var hoverQuery = window.matchMedia("(min-width: 64rem) and (hover: hover) and (pointer: fine)");
+    var chevron = '<svg class="fx-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" ' +
+        'stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ' +
+        'aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>';
+    var groups = [];
+    var uid = 0;
+
+    function setupGroup(container, config) {
+        if (!container) return;
+        var items = [];
+
+        container.querySelectorAll(config.items).forEach(function (item) {
+            var holder = item.querySelector(config.holder);
+            var details = Array.prototype.slice.call(item.querySelectorAll(config.details));
+            if (!holder || !details.length) return;
+
+            var wrap = document.createElement("div");
+            wrap.className = "fx-detail" + (config.detailClass ? " " + config.detailClass : "");
+            wrap.id = "fx-detail-" + (++uid);
+            var inner = document.createElement("div");
+            inner.className = "fx-detail-inner";
+            wrap.appendChild(inner);
+
+            if (config.place === "first-detail") {
+                details[0].parentNode.insertBefore(wrap, details[0]);
+            } else {
+                holder.parentNode.insertBefore(wrap, holder.nextSibling);
+            }
+            details.forEach(function (d) { inner.appendChild(d); });
+
+            var button = document.createElement("button");
+            button.type = "button";
+            button.className = "fx-toggle";
+            var label = document.createElement("span");
+            while (holder.firstChild) label.appendChild(holder.firstChild);
+            button.appendChild(label);
+            button.insertAdjacentHTML("beforeend", chevron);
+            holder.appendChild(button);
+
+            item.classList.add("fx-item");
+            items.push(item);
+        });
+
+        container.classList.add("fx-group");
+        container.addEventListener("click", function (event) {
+            var button = event.target.closest(".fx-toggle");
+            if (!button || !container.classList.contains("is-accordion")) return;
+            var item = button.closest(".fx-item");
+            var willOpen = !item.classList.contains("is-open");
+            items.forEach(function (other) {
+                var open = other === item ? willOpen : false;
+                other.classList.toggle("is-open", open);
+                other.querySelector(".fx-toggle").setAttribute("aria-expanded", String(open));
+            });
+        });
+
+        groups.push({ container: container, items: items });
+    }
+
+    function syncGroups() {
+        var hover = hoverQuery.matches;
+        groups.forEach(function (group) {
+            group.container.classList.toggle("is-hover", hover);
+            group.container.classList.toggle("is-accordion", !hover);
+            group.items.forEach(function (item) {
+                var button = item.querySelector(".fx-toggle");
+                var detail = item.querySelector(".fx-detail");
+                item.classList.remove("is-open");
+                if (hover) {
+                    item.setAttribute("tabindex", "0");
+                    button.setAttribute("tabindex", "-1");
+                    button.removeAttribute("aria-expanded");
+                    button.removeAttribute("aria-controls");
+                } else {
+                    item.removeAttribute("tabindex");
+                    button.removeAttribute("tabindex");
+                    button.setAttribute("aria-expanded", "false");
+                    button.setAttribute("aria-controls", detail.id);
+                }
+            });
+        });
+    }
+
+    setupGroup(document.querySelector(".logbook"), {
+        items: ".logbook__entry",
+        holder: ".logbook__title",
+        details: ".logbook__duties, .logbook__summary",
+        place: "first-detail",
+        detailClass: "logbook__detail"
+    });
+
+    var qualifications = document.getElementById("qualifications");
+    setupGroup(qualifications, {
+        items: ".stcw-plate",
+        holder: ".stcw-plate__abbr",
+        details: ".stcw-plate__title, .stcw-plate__meta"
+    });
+    setupGroup(qualifications, {
+        items: ".progress-item",
+        holder: ".progress-item__name",
+        details: ".progress-item__code, .progress-item__meta"
+    });
+    setupGroup(qualifications, {
+        items: ".ledger__row",
+        holder: ".ledger__name",
+        details: ".ledger__meta, .ledger__issuer"
+    });
+
+    // The three qualification lists share one accordion: one item open at a time.
+    if (qualifications) {
+        var merged = { container: qualifications, items: [] };
+        groups = groups.filter(function (g) {
+            if (g.container !== qualifications) return true;
+            merged.items = merged.items.concat(g.items);
+            return false;
+        });
+        groups.push(merged);
+        qualifications.addEventListener("click", function (event) {
+            var button = event.target.closest(".fx-toggle");
+            if (!button || !qualifications.classList.contains("is-accordion")) return;
+            var item = button.closest(".fx-item");
+            merged.items.forEach(function (other) {
+                if (other !== item && other.classList.contains("is-open")) {
+                    other.classList.remove("is-open");
+                    other.querySelector(".fx-toggle").setAttribute("aria-expanded", "false");
+                }
+            });
+        });
+    }
+
+    syncGroups();
+    hoverQuery.addEventListener("change", syncGroups);
+
+    /* ---------- Floating "Contact" button that becomes the heading ---------- */
+    var contactTitle = document.getElementById("contact-title");
+    var contactSection = document.getElementById("contact");
+    var fab = document.createElement("a");
+    fab.href = "#contact";
+    fab.className = "fx-contact";
+    fab.textContent = "Contact";
+    document.body.appendChild(fab);
+
+    fab.addEventListener("click", function (event) {
+        event.preventDefault();
+        contactSection.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    });
+
+    var base = null;
+
+    function rgb(color) {
+        var m = color.match(/[\d.]+/g) || [0, 0, 0, 1];
+        return [+m[0], +m[1], +m[2], m[3] === undefined ? 1 : +m[3]];
+    }
+
+    function measureBase() {
+        var ts = getComputedStyle(contactTitle);
+        fab.style.fontFamily = ts.fontFamily;
+        fab.style.fontWeight = ts.fontWeight;
+        fab.style.letterSpacing = ts.letterSpacing === "normal" ? "normal" : (parseFloat(ts.letterSpacing) / parseFloat(ts.fontSize)) + "em";
+        fab.style.lineHeight = (parseFloat(ts.lineHeight) / parseFloat(ts.fontSize)) || 1.05;
+        fab.style.transform = "none";
+        var r = fab.getBoundingClientRect();
+        var fs = getComputedStyle(fab);
+        base = {
+            left: r.left,
+            top: r.top,
+            font: parseFloat(fs.fontSize),
+            padX: parseFloat(fs.paddingLeft),
+            padY: parseFloat(fs.paddingTop),
+            bg: rgb(fs.backgroundColor),
+            from: rgb(fs.color),
+            to: rgb(ts.color),
+            titleFont: parseFloat(ts.fontSize)
+        };
+    }
+
+    function ease(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function updateFab() {
+        if (!contactTitle) return;
+        var vh = window.innerHeight;
+        var tr = contactTitle.getBoundingClientRect();
+
+        if (reduce) {
+            fab.classList.toggle("is-done", tr.top < vh * 0.85);
+            return;
+        }
+
+        if (!base) measureBase();
+        var start = vh * 0.98;
+        var end = vh * 0.42;
+        var p = Math.max(0, Math.min(1, (start - tr.top) / (start - end)));
+        var e = ease(p);
+        var s = base.titleFont / base.font;
+        var scale = 1 + (s - 1) * e;
+        var tx = (tr.left - base.padX * s - base.left) * e;
+        var ty = (tr.top - base.padY * s - base.top) * e;
+
+        fab.style.transform = "translate3d(" + tx + "px," + ty + "px,0) scale(" + scale + ")";
+        fab.style.backgroundColor = "rgba(" + base.bg[0] + "," + base.bg[1] + "," + base.bg[2] + "," + (base.bg[3] * (1 - e)) + ")";
+        fab.style.boxShadow = e > 0 ? "0 0.5rem 1.75rem rgba(14,34,51," + (0.22 * (1 - e)) + ")" : "";
+        var c = base.from.map(function (v, i) { return v + (base.to[i] - v) * e; });
+        fab.style.textShadow = e > 0 ? "0 0 1px rgba(0,0,0," + (0.9 * e) + "), 0 1px 3px rgba(0,0,0," + (0.75 * e) + ")" : "";
+        fab.style.color = "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + c[3] + ")";
+
+        var landed = p >= 1;
+        fab.classList.toggle("is-done", landed);
+        contactTitle.classList.toggle("is-landed", landed);
+    }
+
+    if (!reduce && contactTitle) root.classList.add("fx-morph");
+
+    function resetFab() {
+        base = null;
+        fab.removeAttribute("style");
+        updateFab();
+    }
+
+    // The button label follows the page language.
+    var fabLabels = { en: "Contact", es: "Contacto", ca: "Contacte" };
+    function syncFabLabel() {
+        var lang = (root.getAttribute("lang") || "en").slice(0, 2);
+        fab.textContent = fabLabels[lang] || fabLabels.en;
+        resetFab();
+    }
+    new MutationObserver(syncFabLabel).observe(root, { attributes: true, attributeFilter: ["lang", "class"] });
+
+    // Items too close to the page end never cross the reveal line: show them.
+    function revealAtBottom() {
+        if (window.scrollY + window.innerHeight < document.documentElement.scrollHeight - 4) return;
+        document.querySelectorAll(".fx-r:not(.is-in), .fx-m:not(.is-in), .fx-h:not(.is-in)").forEach(function (el) {
+            if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-in");
+        });
+    }
+
+    /* ---------- Scroll loop ---------- */
+    var ticking = false;
+    function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+            updateHeader();
+            updateInk();
+            updateFab();
+            revealAtBottom();
+            ticking = false;
+        });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", resetFab);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(resetFab);
+    syncFabLabel();
+    updateInk();
+})();
