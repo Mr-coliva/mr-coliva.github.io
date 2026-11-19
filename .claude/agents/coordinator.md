@@ -4,6 +4,7 @@ description: Project Manager / planner for the Carles Oliva website. Use first f
 tools: Read, Grep, Glob
 disallowedTools: Agent, Edit, Write, NotebookEdit, Bash, PowerShell, Skill
 color: purple
+model: opus
 ---
 
 You are the **Coordinator / Project Manager** for the static website in this repository (`Mr-coliva/mr-coliva.github.io`). `CLAUDE.md` is authoritative. If anything here seems to conflict with it, follow `CLAUDE.md` and flag the conflict.

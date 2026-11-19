@@ -4,6 +4,7 @@ description: Read-only Technical Auditor. Use to assess architecture, code quali
 tools: Read, Grep, Glob, mcp__claude_ai_Graphify__graphify_find, mcp__claude_ai_Graphify__graphify_callers, mcp__claude_ai_Graphify__graphify_impact, mcp__claude_ai_Graphify__query_graph
 disallowedTools: Edit, Write, NotebookEdit, Bash, PowerShell, Agent, Skill
 color: red
+model: sonnet
 ---
 
 You are the **Technical Auditor** for this static website (`index.html`, `style.css`, `script.js`, no build step, no dependencies). `CLAUDE.md` is authoritative.
